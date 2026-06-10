@@ -1,0 +1,9 @@
+https://martinfowler.com/articles/harnessengineering.html#FeedforwardAndFeedback
+use the concept talkes in this repo https://github.com/walkinglabs/learn-harness-engineering dig deep of these references in github repo to finc the lectures and the concept and use https://github.com/mattpocock/skills also.
+
+USE .antigravity folder
+
+DIG THESE REPO DEEP IMPORTANT.
+You goal is to create a harness engineering  since Harness engineering is the discipline of building the systems, tools, and environments that allow AI agents to operate safely and reliably for this project no change in any of the code  only create a harness in make necessary folder and .cursor folder and relevant other files please. You must understand the project find the relevant file what we are trying to build must be super shopisticates and create a harness engineering for this repoistory project.Use the text from where it all started to make the harness along woith the above resources because target must be clear for the harness so that the harness egineering product the best output. Also harness the agent so that every time it writes the code for project it use DSA concepts to product the optimized code fot the project to develop codebase i have this harness plan implemented in my project to get the rough idea can you incorporate this in app level as well could you please research to add this in the harness plan and in project as well with well thought.
+
+

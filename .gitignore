@@ -24,8 +24,9 @@ venv.bak/
 # Logs
 *.log
 
-# Data
-data/raw/
+# Data ETL outputs
+data/raw/api_football/
+data/raw/conflict/
 .pytest_cache/
 .coverage
 htmlcov/

@@ -12,7 +12,6 @@ from src.data.culture_loader import CultureLoader
 from src.data.narrative_loader import NarrativeLoader
 from src.data.psyche_loader import PsycheLoader
 from src.data.fifa_loader import FifaLoader
-from src.data.api_football_loader import ApiFootballLoader
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +40,6 @@ def run_all_layers():
         (NarrativeLoader(SessionLocal), Narrative, SessionLocal, ["sentiment_score"]),
         (PerformanceLoader(SessionLocal), Match, SessionLocal, []),
         (FifaLoader(FifaSessionLocal), PlayerRaw, FifaSessionLocal, ["overall", "club"]),
-        (ApiFootballLoader(FifaSessionLocal), PlayerRaw, FifaSessionLocal, ["overall"]), 
         (SquadLoader(SessionLocal), Player, SessionLocal, ["club"]),
         (PsycheLoader(SessionLocal), Player, SessionLocal, ["adversity_score"]),
     ]
@@ -53,10 +51,7 @@ def run_all_layers():
         session = session_factory()
         
         skip = False
-        if layer_name == "ApiFootballLoader":
-            # Always run for API integration to get latest 2026 data
-            skip = False
-        elif layer_name == "PsycheLoader":
+        if layer_name == "PsycheLoader":
             # Force run
             skip = False
         else:

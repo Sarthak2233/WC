@@ -1,0 +1,28 @@
+#,pos,player_name,first_names,last_names,name_on_shirt,dob,club,height_cm,nationality
+1.0,GK,MUSSO Juan,Juan Agustín,MUSSO,MUSSO,1994-05-06,Atlético De Madrid (ESP),193.0,Argentina
+2.0,DF,BALERDI Leonardo,Leonardo Julián,BALERDI ROSA,BALERDI,1999-01-26,Olympique Marseille (FRA),188.0,Argentina
+3.0,DF,TAGLIAFICO Nicolas,Nicolás Alejandro,TAGLIAFICO,TAGLIAFICO,1992-08-31,Olympique Lyonnais (FRA),172.0,Argentina
+4.0,DF,MONTIEL Gonzalo,Gonzalo Ariel,MONTIEL,MONTIEL,1997-01-01,CA River Plate (ARG),175.0,Argentina
+5.0,MF,PAREDES Leandro,Leandro Daniel,PAREDES,PAREDES,1994-06-29,CA Boca Juniors (ARG),182.0,Argentina
+6.0,DF,MARTINEZ Lisandro,Lisandro,MARTÍNEZ,MARTÍNEZ,1998-01-18,Manchester United FC (ENG),175.0,Argentina
+7.0,MF,DE PAUL Rodrigo,Rodrigo Javier,DE PAUL,DE PAUL,1994-05-24,Inter Miami CF (USA),178.0,Argentina
+8.0,MF,BARCO Valentin,Valentin,BARCO,BARCO,2004-07-23,RC Strasbourg (FRA),172.0,Argentina
+9.0,FW,ALVAREZ Julian,Julián,ÁLVAREZ,J. ALVAREZ,2000-01-31,Atlético De Madrid (ESP),170.0,Argentina
+10.0,FW,MESSI Lionel,Lionel Andrés,MESSI,MESSI,1987-06-24,Inter Miami CF (USA),170.0,Argentina
+11.0,MF,LO CELSO Giovani,Giovani,LO CELSO,LO CELSO,1996-04-09,Real Betis (ESP),177.0,Argentina
+12.0,GK,RULLI Geronimo,Geronimo,RULLI,RULLI,1992-05-20,Olympique Marseille (FRA),189.0,Argentina
+13.0,DF,ROMERO Cristian,Cristian Gabriel,ROMERO,ROMERO,1998-04-27,Tottenham Hotspur FC (ENG),185.0,Argentina
+14.0,MF,PALACIOS Exequiel,Exequiel Alejandro,PALACIOS,PALACIOS,1998-10-05,Bayer 04 Leverkusen (GER),177.0,Argentina
+15.0,MF,GONZALEZ Nico,Nicolas Ivan,GONZALEZ,N. GONZALEZ,1998-04-06,Atlético De Madrid (ESP),180.0,Argentina
+16.0,FW,ALMADA Thiago,Thiago Ezequiel,ALMADA,ALMADA,2001-04-26,Atlético De Madrid (ESP),171.0,Argentina
+17.0,FW,SIMEONE Giuliano,Giuliano,SIMEONE,SIMEONE,2002-12-18,Atlético De Madrid (ESP),174.0,Argentina
+18.0,FW,PAZ Nico,Nicolas,PAZ MARTÍNEZ,NICO PAZ,2004-09-08,Como (ITA),185.0,Argentina
+19.0,DF,OTAMENDI Nicolas,Nicolas Hernan Gonzalo,OTAMENDI,OTAMENDI,1988-02-12,SL Benfica (POR),182.0,Argentina
+20.0,MF,MAC ALLISTER Alexis,Alexis,MAC ALLISTER,MAC ALLISTER,1998-12-24,Liverpool FC (ENG),176.0,Argentina
+21.0,FW,LOPEZ Jose Manuel,Jose Manuel Alberto,LOPEZ,LOPEZ,2000-12-06,SE Palmeiras (BRA),190.0,Argentina
+22.0,FW,MARTINEZ Lautaro,Lautaro Javier,MARTÍNEZ,L. MARTINEZ,1997-08-22,FC Internazionale Milano (ITA),175.0,Argentina
+23.0,GK,MARTINEZ Emiliano,Damián Emiliano,MARTÍNEZ,E. MARTINEZ,1992-09-02,Aston Villa FC (ENG),195.0,Argentina
+24.0,MF,FERNANDEZ Enzo,Enzo Jeremías,FERNÁNDEZ,E. FERNANDEZ,2001-01-17,Chelsea FC (ENG),178.0,Argentina
+25.0,DF,MEDINA Facundo,Facundo Axel,MEDINA,MEDINA,1999-05-28,Olympique Marseille (FRA),184.0,Argentina
+26.0,DF,MOLINA Nahuel,Nahuel,MOLINA LUCERO,MOLINA,1998-04-06,Atlético De Madrid (ESP),179.0,Argentina
+13.5,Head coach,Unknown,Lionel Sebastián,SCALONI,Unknown,Unknown,Unknown,179.69230769230768,Argentina

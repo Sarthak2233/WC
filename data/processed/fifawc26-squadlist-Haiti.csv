@@ -1,0 +1,28 @@
+#,pos,player_name,first_names,last_names,name_on_shirt,dob,club,height_cm,nationality
+1.0,GK,PLACIDE Johny,Johny,PLACIDE,PLACIDE,1988-01-29,SC Bastia (FRA),181.0,Haiti
+2.0,DF,ARCUS Carlens,Carlens Jean Fedlaire Ruby,ARCUS,ARCUS,1996-06-28,Angers SCO (FRA),180.0,Haiti
+3.0,DF,THERMONCY Keeto,Keeto,THERMONCY,THERMONCY,2006-03-29,BSC Young Boys (SUI),179.0,Haiti
+4.0,DF,ADE Ricardo,Ricardo,ADE,ADE,1990-05-21,LDU Quito (ECU),190.0,Haiti
+5.0,DF,DELCROI X Hannes,Hannes Piterson D,DELCROI X,DELCROI X,1999-02-28,FC Lugano (SUI),183.0,Haiti
+6.0,MF,SAINTE Carl,Carl Fred,SAINTE,SAINTE,2002-08-09,El Paso Locomotive FC (USA),182.0,Haiti
+7.0,FW,ETIENNE Derrick,Derrick Burckley,ETIENNE JR,ETIENNE JR,1996-11-25,Toronto FC (CAN),178.0,Haiti
+8.0,DF,EXPERIENCE Martin,Martin Yves Roberns Didier,EXPERIENCE,EXPERIENCE,1999-03-09,AS Nancy (FRA),178.0,Haiti
+9.0,FW,NAZON Duckens,Duckens,NAZON,NAZON,1994-04-07,Esteghlal Tehran FC (IRN),181.0,Haiti
+10.0,MF,BELLEGARDE Jean-Ricner,Jean Ricner,BELLEGARDE,BELLEGARDE,1998-06-27,Wolverhampton Wanderers FC (ENG),170.0,Haiti
+11.0,FW,DEEDSON Louicius,Don Louicius,DEEDSON,DEEDSON,2001-02-11,FC Dallas (USA),178.0,Haiti
+12.0,GK,PIERRE Alexandre,Alexandre Jr,PIERRE,A. PIERRE,2001-02-25,FC Sochaux-Montbéliard (FRA),190.0,Haiti
+13.0,DF,LACROIX Markhus,Markhus,LACROIX,LACROIX,1993-10-14,Colorado Springs Switchbacks FC (USA),175.0,Haiti
+14.0,MF,PIERRE Leverton,Leverton,PIERRE,L. PIERRE,1998-03-09,FC Vizela (POR),181.0,Haiti
+15.0,FW,PROVIDENCE Ruben,Ruben Fritzner,PROVIDENCE,PROVIDENCE,2001-07-07,Almere City FC (NED),178.0,Haiti
+16.0,FW,JOSEPH Lenny,Lenny Alvin Pico,JOSEPH,JOSEPH,2000-10-12,Ferencvárosi TC (HUN),182.0,Haiti
+17.0,MF,JEAN JACQUES Danley,Danley,JEAN JACQUES,JEAN JACQUES,2000-05-20,Philadelphia Union (USA),182.0,Haiti
+18.0,FW,ISIDOR Wilson,Wilson,ISIDOR,ISIDOR,2000-08-27,Sunderland AFC (ENG),184.0,Haiti
+19.0,FW,FORTUNE Yassin,Yassin Enzo,FORTUNE,FORTUNE,1999-01-30,FC Vizela (POR),186.0,Haiti
+20.0,FW,PIERROT Frantzdy,Frantzdy,PIERROT,PIERROT,1995-03-29,Çaykur Rizespor (TUR),194.0,Haiti
+21.0,FW,CASIMIR Josue,Josue Jeremie,CASIMIR,CASIMIR,2001-09-24,AJ Auxerre (FRA),178.0,Haiti
+22.0,DF,DUVERNE Jean-Kevin,Jean-Kévin,DUVERNE,DUVERNE,1997-07-12,KAA Gent (BEL),184.0,Haiti
+23.0,GK,DUVERGER Josue,Josue,DUVERGER,DUVERGER,2000-04-27,FC Cosmos Koblenz (GER),187.0,Haiti
+24.0,DF,PAUGAIN Wilguens,Wilguens Raphael Polynice,PAUGAIN,PAUGIN,2001-08-24,SV Zulte Waregem (BEL),180.0,Haiti
+25.0,MF,SIMON Dominique,Dominique Celidor,SIMON,SIMON,2000-07-29,FC Tatran Prešov (SVK),178.0,Haiti
+26.0,MF,PIERRE Woodensky,Olivier Woodensky,PIERRE,W. PIERRE,2004-12-30,Violette AC (HAI),177.0,Haiti
+13.5,Head coach,Unknown,Sébastien Bernard Henri C,MIGNÉ,Unknown,Unknown,Unknown,181.3846153846154,France

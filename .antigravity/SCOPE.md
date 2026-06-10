@@ -1,7 +1,7 @@
 # Scope Control Policy
 
 ## Context Management
-- **Minimize Reads:** Do not read more than 3 related files at once. Use `grep_search` to target specific lines.
+- ** Reads:** read more related files at once. Use `grep_search` to target specific lines.
 - **Vertical Isolation:** When working on a specific Data Layer (e.g., Layer 5: Political), ignore files related to unrelated layers (e.g., Layer 2: FBref) unless a join is explicitly required.
 - **Context Pruning:** At the end of every sub-phase, explicitly "forget" transient variables or local assumptions that are not codified in `.antigravity`.
 

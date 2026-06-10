@@ -17,7 +17,7 @@ class PsycheLoader(BaseLoader):
     
     def __init__(self, session_factory):
         self.session_factory = session_factory
-        self.data_path = os.path.join("data", "raw", "Sets_More", "fifa_world_cup_2026_player_performance.csv")
+        self.data_path = os.path.join("data", "raw", "fifa_world_cup_2026_player_performance.csv")
         
     def extract(self) -> pd.DataFrame:
         """Extracts performance data from local CSV."""

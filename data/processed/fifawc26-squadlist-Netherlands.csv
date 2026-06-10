@@ -1,0 +1,28 @@
+#,pos,player_name,first_names,last_names,name_on_shirt,dob,club,height_cm,nationality
+1.0,GK,VERBRUGGEN Bart,Bart,VERBRUGGEN,VERBRUGGEN,2002-08-18,Brighton & Hove Albion FC (ENG),193.0,Netherlands
+2.0,DF,TIMBER Jurrien,Jurriën David Norman,TIMBER,J. TIMBER,2001-06-17,Arsenal FC (ENG),179.0,Netherlands
+3.0,MF,DE ROON Marten,Marten Elco,DE ROON,DE ROON,1991-03-29,Atalanta Bergamo (ITA),186.0,Netherlands
+4.0,DF,VAN DIJK Virgil,Virgil,VAN DIJK,VIRGIL,1991-07-08,Liverpool FC (ENG),195.0,Netherlands
+5.0,DF,AKE Nathan,Nathan Benjamin,AKE,AKÉ,1995-02-18,Manchester City FC (ENG),180.0,Netherlands
+6.0,DF,VAN HECKE Jan Paul,Jan-Paul,VAN HECKE,VAN HECKE,2000-06-08,Brighton & Hove Albion FC (ENG),189.0,Netherlands
+7.0,MF,KLUIVERT Justin,Justin Dean,KLUIVERT,KLUIVERT,1999-05-05,AFC Bournemouth (ENG),173.0,Netherlands
+8.0,MF,GRAVENBERCH Ryan,Ryan Jiro,GRAVENBERCH,GRAVENBERCH,2002-05-16,Liverpool FC (ENG),190.0,Netherlands
+9.0,FW,WEGHORST Wout,Wout François Maria,WEGHORST,WEGHORST,1992-08-07,AFC Ajax (NED),197.0,Netherlands
+10.0,FW,DEPAY Memphis,Memphis,DEPAY,MEMPHIS,1994-02-13,SC Corinthians (BRA),178.0,Netherlands
+11.0,FW,GAKPO Cody,Cody Mathès,GAKPO,GAKPO,1999-05-07,Liverpool FC (ENG),193.0,Netherlands
+12.0,DF,WIEFFER Mats,Mats Henrik Berne,WIEFFER,WIEFFER,1999-11-16,Brighton & Hove Albion FC (ENG),189.0,Netherlands
+13.0,GK,ROEFS Robin,Robin Gerardus Petrus,ROEFS,ROEFS,2003-01-17,Sunderland AFC (ENG),193.0,Netherlands
+14.0,MF,REIJNDERS Tijjani,Tijjani Martinus Jan,REIJNDERS,REIJNDERS,1998-07-29,Manchester City FC (ENG),178.0,Netherlands
+15.0,DF,VAN DE VEN Micky,Micky,VAN DE VEN,VAN DE VEN,2001-04-19,Tottenham Hotspur FC (ENG),193.0,Netherlands
+16.0,MF,TIL Guus,Guus Berend,TIL,TIL,1997-12-22,PSV Eindhoven (NED),188.0,Netherlands
+17.0,FW,LANG Noa,Noa Noëll,LANG,LANG,1999-06-17,Galatasaray SK (TUR),176.0,Netherlands
+18.0,FW,MALEN Donyell,Donyell,MALEN,MALEN,1999-01-19,AS Roma (ITA),178.0,Netherlands
+19.0,FW,BROBBEY Brian,Brian Ebenezer Adjei,BROBBEY,BROBBEY,2002-02-01,Sunderland AFC (ENG),181.0,Netherlands
+20.0,MF,KOOPMEINERS Teun,Teun,KOOPMEINERS,KOOPMEINERS,1998-02-28,Juventus FC (ITA),185.0,Netherlands
+21.0,MF,DE JONG Frenkie,Frenkie,DE JONG,F. DE JONG,1997-05-12,FC Barcelona (ESP),181.0,Netherlands
+22.0,DF,DUMFRIES Denzel,Denzel Justus Morris,DUMFRIES,DUMFRIES,1996-04-18,FC Internazionale Milano (ITA),188.0,Netherlands
+23.0,GK,FLEKKEN Mark,Mark Maria Hubertus,FLEKKEN,FLEKKEN,1993-06-13,Bayer 04 Leverkusen (GER),195.0,Netherlands
+24.0,FW,SUMMERVILLE Crysencio,Crysencio Jilbert Sylverio Cir,SUMMERVILLE,SUMMERVILLE,2001-10-30,West Ham United FC (ENG),172.0,Netherlands
+25.0,DF,HATO Jorrel,Jorrel Evan,HATO,HATO,2006-03-07,Chelsea FC (ENG),182.0,Netherlands
+26.0,MF,TIMBER Quinten,Quinten Ryan Crispito,TIMBER,Q. TIMBER,2001-06-17,Olympique Marseille (FRA),176.0,Netherlands
+13.5,Head coach,Unknown,Ronald,KOEMAN,Unknown,Unknown,Unknown,184.92307692307693,Netherlands

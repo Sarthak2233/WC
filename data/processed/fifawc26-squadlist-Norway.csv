@@ -1,0 +1,28 @@
+#,pos,player_name,first_names,last_names,name_on_shirt,dob,club,height_cm,nationality
+1.0,GK,NYLAND Orjan,Ørjan Haskjold,NYLAND,NYLAND,1990-09-10,Sevilla FC (ESP),192.0,Norway
+2.0,MF,THORSBY Morten,Morten,THORSBY,THORSBY,1996-05-05,US Cremonese (ITA),188.0,Norway
+3.0,DF,AJER Kristoffer,Kristoffer Vassbakk Köpp,AJER,VASSBAKK AJER,1998-04-17,Brentford FC (ENG),198.0,Norway
+4.0,DF,OSTIGARD Leo,Leo Skiri,ØSTIGÅRD,ØSTIGÅRD,1999-11-28,Genoa CFC (ITA),183.0,Norway
+5.0,DF,MOLLER WOLFE David,David Møller,WOLFE,MØLLER WOLFE,2002-04-23,Wolverhampton Wanderers FC (ENG),185.0,Norway
+6.0,MF,BERG Patrick,Patrick,BERG,BERG,1997-11-24,FK Bodø/Glimt (NOR),178.0,Norway
+7.0,FW,SORLOTH Alexander,Alexander,SØRLOTH,SØRLOTH,1995-12-05,Atlético De Madrid (ESP),196.0,Norway
+8.0,MF,BERGE Sander,Sander Gard Bolin,BERGE,BERGE,1998-02-14,Fulham FC (ENG),195.0,Norway
+9.0,FW,HAALAND Erling,Erling Braut,HAALAND,BRAUT HAALAND,2000-07-21,Manchester City FC (ENG),195.0,Norway
+10.0,MF,ODEGAARD Martin,Martín,ØDEGAARD,ØDEGAARD,1998-12-17,Arsenal FC (ENG),178.0,Norway
+11.0,FW,STRAND LARSEN Jorgen,Jørgen Strand,LARSEN,STRAND LARSEN,2000-02-06,Crystal Palace FC (ENG),193.0,Norway
+12.0,GK,TANGVIK Sander,Sander,TANGVIK,TANGVIK,2002-11-29,Hamburger SV (GER),193.0,Norway
+13.0,GK,SELVIK Egil,Egil,SELVIK,SELVIK,1997-07-30,Watford FC (ENG),187.0,Norway
+14.0,MF,AURSNES Fredrik,Fredrik,AURSNES,AURSNES,1995-12-10,SL Benfica (POR),181.0,Norway
+15.0,DF,BJORKAN Fredrik Andre,Fredrik André,BJØRKAN,BJØRKAN,1998-08-21,FK Bodø/Glimt (NOR),180.0,Norway
+16.0,DF,HOLMGREN PEDERSEN Marcus,Marcus Holmgren,PEDERSEN,HOLMGREN,2000-07-16,Torino FC (ITA),184.0,Norway
+17.0,DF,HEGGEM Torbjorn,Torbjørn Lysaker,HEGGEM,HEGGEM,1999-01-12,Bologna FC (ITA),192.0,Norway
+18.0,MF,THORSTVEDT Kristian,Kristian,THORSTVEDT,THORSTVEDT,1999-03-13,US Sassuolo (ITA),189.0,Norway
+19.0,MF,AASGAARD Thelo,Thelonious Gerard,AASGAARD,AASGAARD,2002-05-02,Rangers FC (SCO),188.0,Norway
+20.0,FW,NUSA Antonio,Antonio Eromonsele Nordby,NUSA,NUSA,2005-04-17,RB Leipzig (GER),183.0,Norway
+21.0,MF,SCHJELDERUP Andreas,Andreas Rædergård,SCHJELDERUP,SCHJELDERUP,2004-06-01,SL Benfica (POR),177.0,Norway
+22.0,MF,BOBB Oscar,Oscar,BOBB,BOBB,2003-07-12,Fulham FC (ENG),177.0,Norway
+23.0,MF,HAUGE Jens Petter,Jens Petter,HAUGE,HAUGE,1999-10-12,FK Bodø/Glimt (NOR),184.0,Norway
+24.0,DF,LANGAS Sondre,Sondre Klingen,LANGÅS,LANGÅS,2001-02-02,Derby County FC (ENG),190.0,Norway
+25.0,DF,FALCHENER Henrik,Henrik Sælebakke,FALCHENER,FALCHENER,2003-05-08,Viking Stavanger (NOR),194.0,Norway
+26.0,FW,RYERSON Julian,Julian,RYERSON,RYERSON,1997-11-17,Borussia Dortmund (GER),186.0,Norway
+13.5,Head coach,Unknown,Ståle,SOLBAKKEN,Unknown,Unknown,Unknown,187.15384615384616,Norway

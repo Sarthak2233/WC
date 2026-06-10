@@ -1,0 +1,28 @@
+#,pos,player_name,first_names,last_names,name_on_shirt,dob,club,height_cm,nationality
+1.0,GK,KOBEL Gregor,Gregor,KOBEL,KOBEL,1997-12-06,Borussia Dortmund (GER),196.0,Switzerland
+2.0,DF,MUHEIM Miro,Miro Max Maria,MUHEIM,MUHEIM,1998-03-24,Hamburger SV (GER),182.0,Switzerland
+3.0,DF,WIDMER Silvan,Silvan Dominic,WIDMER,WIDMER,1993-03-05,1 . FSV Mainz 05 (GER),183.0,Switzerland
+4.0,DF,ELVEDI Nico,Nico,ELVEDI,ELVEDI,1996-09-30,Borussia Mönchengladbach (GER),189.0,Switzerland
+5.0,DF,AKANJI Manuel,Manuel Obafemi,AKANJI,AKANJI,1995-07-19,FC Internazionale Milano (ITA),188.0,Switzerland
+6.0,MF,ZAKARIA Denis,Denis Lemi,ZAKARIA LAKO LADO,ZAKARIA,1996-11-20,AS Monaco (FRA),189.0,Switzerland
+7.0,FW,EMBOLO Breel,Breel Donald,EMBOLO,EMBOLO,1997-02-14,Stade Rennais FC (FRA),184.0,Switzerland
+8.0,MF,FREULER Remo,Remo Marco,FREULER,FREULER,1992-04-15,Bologna FC (ITA),181.0,Switzerland
+9.0,MF,MANZAMBI Johan,Johan Kula,MANZAMBI,MANZAMBI,2005-10-14,SC Freiburg (GER),182.0,Switzerland
+10.0,MF,XHAKA Granit,Granit,XHAKA,XHAKA,1992-09-27,Sunderland AFC (ENG),183.0,Switzerland
+11.0,FW,NDOYE Dan,Dan,NDOYE,NDOYE,2000-10-25,Nottingham Forest FC (ENG),184.0,Switzerland
+12.0,GK,MVOGO Yvon,Yvon Landry,MVOGO NGANOMA,MVOGO,1994-06-06,FC Lorient (FRA),190.0,Switzerland
+13.0,DF,RODRIGUEZ Ricardo,Ricardo Ivan,RODRIGUEZ ARAYA,RODRIGUEZ,1992-08-25,Real Betis (ESP),182.0,Switzerland
+14.0,MF,JASHARI Ardon,Ardon,JASHARI,JASHARI,2002-07-30,AC Milan (ITA),181.0,Switzerland
+15.0,MF,SOW Djibril,Mohameth Djibril Ibrahima,SOW,SOW,1997-02-06,Sevilla FC (ESP),183.0,Switzerland
+16.0,FW,FASSNACHT Christian,Christian Andreas,FASSNACHT,FASSNACHT,1993-11-11,BSC Young Boys (SUI),185.0,Switzerland
+17.0,FW,VARGAS Ruben,Ruben Estephan,VARGAS MARTINEZ,VARGAS,1998-08-05,Sevilla FC (ESP),179.0,Switzerland
+18.0,DF,COEMERT Eray,Eray Ervin,CÖMERT,CÖMERT,1998-02-04,Valencia CF (ESP),183.0,Switzerland
+19.0,FW,OKAFOR Noah,Noah Arinzechukwu,OKAFOR,OKAFOR,2000-05-24,Leeds United FC (ENG),185.0,Switzerland
+20.0,MF,AEBISCHER Michel,Michel,AEBISCHER,AEBISCHER,1997-01-06,Pisa SC (ITA),183.0,Switzerland
+21.0,GK,KELLER Marvin,Marvin,KELLER,KELLER,2002-07-03,BSC Young Boys (SUI),189.0,Switzerland
+22.0,MF,RIEDER Fabian,Fabian,RIEDER,RIEDER,2002-02-16,FC Augsburg (GER),181.0,Switzerland
+23.0,FW,AMDOUNI Zeki,Mohamed Zeki,AMDOUNI,AMDOUNI,2000-12-04,Burnley FC (ENG),183.0,Switzerland
+24.0,DF,AMENDA Aurele,Aurèle Florian,AMENDA,AMENDA,2003-07-31,Eintracht Frankfurt (GER),194.0,Switzerland
+25.0,DF,JAQUEZ Luca,Luca Antony,JAQUEZ,JAQUEZ,2003-06-02,VfB Stuttgart (GER),187.0,Switzerland
+26.0,FW,ITTEN Cedric,Cedric Jan,ITTEN,ITTEN,1996-12-27,Fortuna Düsseldorf (GER),190.0,Switzerland
+13.5,Head coach,Unknown,Murat,YAKIN,Unknown,Unknown,Unknown,185.23076923076923,Switzerland

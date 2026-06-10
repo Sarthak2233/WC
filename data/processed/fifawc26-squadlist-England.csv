@@ -1,0 +1,28 @@
+#,pos,player_name,first_names,last_names,name_on_shirt,dob,club,height_cm,nationality
+1.0,GK,PICKFORD Jordan,Jordan Lee,PICKFORD,PICKFORD,1994-03-07,Everton FC (ENG),185.0,England
+2.0,DF,KONSA Ezri,Ezri Ngoyo,KONSA,KONSA,1997-10-23,Aston Villa FC (ENG),180.0,England
+3.0,DF,OREILLY Nico,Nico,O'REILLY,O'REILLY,2005-03-21,Manchester City FC (ENG),177.0,England
+4.0,MF,RICE Declan,Declan,RICE,RICE,1999-01-14,Arsenal FC (ENG),185.0,England
+5.0,DF,STONES John,John,STONES,STONES,1994-05-28,Manchester City FC (ENG),188.0,England
+6.0,DF,GUEHI Marc,Addji Keaninkin Marc-Isreal,GUEHI,GUEHI,2000-07-13,Manchester City FC (ENG),183.0,England
+7.0,FW,SAKA Bukayo,Bukayo Ayoyinka,SAKA,SAKA,2001-09-05,Arsenal FC (ENG),178.0,England
+8.0,MF,ANDERSON Elliot,Elliot Junior,ANDERSON,ANDERSON,2002-11-06,Nottingham Forest FC (ENG),179.0,England
+9.0,FW,KANE Harry,Harry Edward,KANE,KANE,1993-07-28,FC Bayern München (GER),190.0,England
+10.0,MF,BELLINGHAM Jude,Jude Victor William,BELLINGHAM,BELLINGHAM,2003-06-29,Real Madrid C. F. (ESP),183.0,England
+11.0,FW,RASHFORD Marcus,Marcus,RASHFORD,RASHFORD,1997-10-31,FC Barcelona (ESP),180.0,England
+12.0,DF,LIVRAMENTO Tino,Valentino Francisco,LIVRAMENTO,LIVRAMENTO,2002-11-12,Newcastle United FC (ENG),182.0,England
+13.0,GK,HENDERSON Dean,Dean Bradley,HENDERSON,D. HENDERSON,1997-03-12,Crystal Palace FC (ENG),188.0,England
+14.0,MF,HENDERSON Jordan,Jordan Brian,HENDERSON,J. HENDERSON,1990-06-17,Brentford FC (ENG),183.0,England
+15.0,DF,BURN Dan,Daniel Johnson,BURN,BURN,1992-05-09,Newcastle United FC (ENG),201.0,England
+16.0,MF,MAINOO Kobbie,Kobbie Boateng,MAINOO,MAINOO,2005-04-19,Manchester United FC (ENG),183.0,England
+17.0,MF,ROGERS Morgan,Morgan Elliot,ROGERS,ROGERS,2002-07-26,Aston Villa FC (ENG),187.0,England
+18.0,FW,GORDON Anthony,Anthony Michael,GORDON,GORDON,2001-02-24,Newcastle United FC (ENG),182.0,England
+19.0,FW,WATKINS Ollie,Oliver George Arthur,WATKINS,WATKINS,1995-12-30,Aston Villa FC (ENG),180.0,England
+20.0,FW,MADUEKE Noni,Chukwunonso Azuka Tristan,MADUEKE,MADUEKE,2002-03-10,Arsenal FC (ENG),182.0,England
+21.0,MF,EZE Eberechi,Eberechi Oluchi,EZE,EZE,1998-06-29,Arsenal FC (ENG),178.0,England
+22.0,FW,TONEY Ivan,Ivan Benjamin Elijah,TONEY,TONEY,1996-03-16,Al Ahli FC (KSA),185.0,England
+23.0,GK,TRAFFORD James,James Harrington,TRAFFORD,TRAFFORD,2002-10-10,Manchester City FC (ENG),197.0,England
+24.0,DF,JAMES Reece,Reece Lewis,JAMES,JAMES,1999-12-08,Chelsea FC (ENG),180.0,England
+25.0,DF,SPENCE Djed,Diop Tehuti Djed-Hotep,SPENCE,SPENCE,2000-08-09,Tottenham Hotspur FC (ENG),184.0,England
+26.0,DF,QUANSAH Jarell,Jarell Amorin,QUANSAH,QUANSAH,2003-01-29,Bayer 04 Leverkusen (GER),190.0,England
+13.5,Head coach,Unknown,Thomas,TUCHEL,Unknown,Unknown,Unknown,184.23076923076923,Germany

@@ -15,16 +15,15 @@ class TournamentSimulator:
         
     def _create_match_features(self, team_a: Dict[str, Any], team_b: Dict[str, Any]) -> pd.DataFrame:
         """
-        Creates a feature vector representing a matchup.
-        For simplicity, we subtract team B's features from team A's features.
+        Creates a feature vector representing a matchup using the 4 core psychopolitical layers.
         """
-        # Exclude non-numeric fields
-        keys = [k for k in team_a.keys() if isinstance(team_a[k], (int, float))]
-        
-        diff = {}
-        for k in keys:
-            if k in team_b:
-                diff[f"diff_{k}"] = team_a[k] - team_b[k]
+        # Exactly the features used in CSVFeatureOracle.build_training_set
+        diff = {
+            "diff_elo": float(team_a["elo"]) - float(team_b["elo"]),
+            "diff_ppi": float(team_a["ppi"]) - float(team_b["ppi"]),
+            "diff_uai": float(team_a["uai"]) - float(team_b["uai"]),
+            "diff_ladder": float(team_a["ladder"]) - float(team_b["ladder"])
+        }
                 
         return pd.DataFrame([diff])
 

@@ -1,7 +1,7 @@
 import logging
 import os
 from sqlalchemy import inspect
-from src.database import SessionLocal, init_db, WorldCup, Match, Player, Country, Culture, Conflict, Narrative
+from src.database import SessionLocal, init_db, WorldCup, Match, Player, Country, Culture, Conflict, Narrative, Elo
 from src.fifa_database import init_fifa_db, FifaSessionLocal, PlayerRaw
 from src.data.football_loader import FootballLoader
 from src.data.performance_loader import PerformanceLoader
@@ -12,6 +12,7 @@ from src.data.culture_loader import CultureLoader
 from src.data.narrative_loader import NarrativeLoader
 from src.data.psyche_loader import PsycheLoader
 from src.data.fifa_loader import FifaLoader
+from src.data.elo_loader import EloLoader
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +43,7 @@ def run_all_layers():
         (FifaLoader(FifaSessionLocal), PlayerRaw, FifaSessionLocal, ["overall", "club"]),
         (SquadLoader(SessionLocal), Player, SessionLocal, ["club"]),
         (PsycheLoader(SessionLocal), Player, SessionLocal, ["adversity_score"]),
+        (EloLoader(SessionLocal), Elo, SessionLocal, []),
     ]
     
     for loader, model, session_factory, critical_cols in tasks:
@@ -51,7 +53,7 @@ def run_all_layers():
         session = session_factory()
         
         skip = False
-        if layer_name == "PsycheLoader":
+        if layer_name in ["PsycheLoader", "FootballLoader"]:
             # Force run
             skip = False
         else:

@@ -1,0 +1,28 @@
+#,pos,player_name,first_names,last_names,name_on_shirt,dob,club,height_cm,nationality
+1.0,GK,SUZUKI Zion,Zion,SUZUKI,SUZUKI,2002-08-21,Parma (ITA),190.0,Japan
+2.0,DF,SUGAWARA Yukinari,Yukinari,SUGAWARA,SUGAWARA,2000-06-28,SV Werder Bremen (GER),179.0,Japan
+3.0,DF,TANIGUCHI Shogo,Shogo,TANIGUCHI,TANIGUCHI,1991-07-15,Sint-Truiden VV (BEL),185.0,Japan
+4.0,DF,ITAKURA Kou,Kou,ITAKURA,ITAKURA,1997-01-27,AFC Ajax (NED),188.0,Japan
+5.0,DF,NAGATOMO Yuto,Yuto,NAGATOMO,NAGATOMO,1986-09-12,FC Tokyo (JPN),170.0,Japan
+6.0,MF,ENDO Wataru,Wataru,ENDO,ENDO,1993-02-09,Liverpool FC (ENG),178.0,Japan
+7.0,MF,TANAKA Ao,Ao,TANAKA,TANAKA,1998-09-10,Leeds United FC (ENG),180.0,Japan
+8.0,MF,KUBO Takefusa,Takefusa,KUBO,KUBO,2001-06-04,Real Sociedad (ESP),173.0,Japan
+9.0,FW,GOTO Keisuke,Keisuke,GOTO,GOTO,2005-06-03,Sint-Truiden VV (BEL),191.0,Japan
+10.0,MF,DOAN Ritsu,Ritsu,DOAN,DOAN,1998-06-16,Eintracht Frankfurt (GER),172.0,Japan
+11.0,MF,MAEDA Daizen,Daizen,MAEDA,DAIZEN,1997-10-20,Celtic FC (SCO),173.0,Japan
+12.0,GK,OSAKO Keisuke,Keisuke,OSAKO,OSAKO,1999-07-28,Sanfrecce Hiroshima (JPN),188.0,Japan
+13.0,MF,NAKAMURA Keito,Keito,NAKAMURA,NAKAMURA,2000-07-28,Stade Reims (FRA),180.0,Japan
+14.0,MF,ITO Junya,Junya,ITO,ITO,1993-03-09,KRC Genk (BEL),177.0,Japan
+15.0,MF,KAMADA Daichi,Daichi,KAMADA,KAMADA,1996-08-05,Crystal Palace FC (ENG),180.0,Japan
+16.0,DF,WATANABE Tsuyoshi,Tsuyoshi,WATANABE,WATANABE,1997-02-05,Feyenoord Rotterdam (NED),184.0,Japan
+17.0,MF,SUZUKI Yuito,Yuito,SUZUKI,Y. SUZUKI,2001-10-25,SC Freiburg (GER),175.0,Japan
+18.0,FW,UEDA Ayase,Ayase,UEDA,AYASE,1998-08-28,Feyenoord Rotterdam (NED),182.0,Japan
+19.0,FW,OGAWA Koki,Koki,OGAWA,OGAWA,1997-08-08,NEC Nijmegen (NED),186.0,Japan
+20.0,DF,SEKO Ayumu,Ayumu,SEKO,SEKO,2000-06-07,Le Havre AC (FRA),186.0,Japan
+21.0,DF,ITO Hiroki,Hiroki,ITO,H. ITO,1999-05-12,FC Bayern München (GER),188.0,Japan
+22.0,DF,TOMIYASU Takehiro,Takehiro,TOMIYASU,TOMIYASU,1998-11-05,AFC Ajax (NED),187.0,Japan
+23.0,GK,HAYAKAWA Tomoki,Tomoki,HAYAKAWA,HAYAKAWA,1999-03-03,Kashima Antlers (JPN),187.0,Japan
+24.0,MF,SANO Kaishu,Kaishu,SANO,SANO,2000-12-30,1 . FSV Mainz 05 (GER),176.0,Japan
+25.0,DF,SUZUKI Junnosuke,Junnosuke,SUZUKI,J. SUZUKI,2003-07-12,FC København (DEN),180.0,Japan
+26.0,FW,SHIOGAI Kento,Kento,SHIOGAI,SHIOGAI,2005-03-26,VfL Wolfsburg (GER),180.0,Japan
+13.5,Head coach,Unknown,Hajime,MORIYASU,Unknown,Unknown,Unknown,181.34615384615384,Japan

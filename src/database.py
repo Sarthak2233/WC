@@ -128,6 +128,15 @@ class Conflict(Base):
     intensity: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     sanctions_flag: Mapped[bool] = mapped_column(Boolean, default=False)
 
+class Elo(Base):
+    """Table 8: Elo Ratings"""
+    __tablename__ = "elo_ratings"
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    country_code: Mapped[str] = mapped_column(String, index=True)
+    year: Mapped[int] = mapped_column(Integer, index=True)
+    elo: Mapped[float] = mapped_column(Float)
+
 class Narrative(Base):
     """Table 7: Narratives"""
     __tablename__ = "narratives"

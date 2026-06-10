@@ -1,0 +1,28 @@
+#,pos,player_name,first_names,last_names,name_on_shirt,dob,club,height_cm,nationality
+1.0,GK,MOHAMED ELSHENAWY,Mohamed Elsayed Mohamed,ELSHENAWY GOMAA,M. ELSHENAWY,1988-12-18,Al Ahly FC (EGY),191.0,Egypt
+2.0,DF,YASSER IBRAHIM,Yasser Ahmed Ibrahim,ELHANAFY,YASSER,1993-02-10,Al Ahly FC (EGY),185.0,Egypt
+3.0,DF,MOHAMED HANY,Mohamed Hany Gamal,ELDEMERDASH,M. HANY,1996-02-02,Al Ahly FC (EGY),175.0,Egypt
+4.0,DF,HOSSAM ABDELMAGUID,Hossam Abdelmegeed Abdelsalam,ABDELMEGEED,HOSSAM,2001-04-30,Zamalek SC (EGY),193.0,Egypt
+5.0,DF,RAMY RABIA,Ramy Hisham Abdelaziz Moustafa,RABIA,R. RABI AA,1993-05-20,Al Ain FC (UAE),183.0,Egypt
+6.0,DF,MOHAMED ABDELMONEIM,Mohamed Abdelmoneim Elsayed M,AHMED,M. ABDELMONIEM,1999-02-01,OGC Nice (FRA),184.0,Egypt
+7.0,FW,TREZEGUET,Mahmoud Ahmed Ibrahim,HASSAN,M. TREZEGUET,1994-10-01,Al Ahly FC (EGY),181.0,Egypt
+8.0,MF,EMAM ASHOUR,Emam Ashour Metwaly,ABDELGHANY,E. ASHOUR,1998-02-20,Al Ahly FC (EGY),180.0,Egypt
+9.0,FW,HAMZA ABDELKARIM,Hamza Mohamed Abdelkarim E,SELIM,ABDELKARIM,2008-01-01,FC Barcelona (ESP),182.0,Egypt
+10.0,FW,MOHAMED SALAH,Mohamed Salah Hamed Mahrous,GHALY,M. SALAH,1992-06-15,Liverpool FC (ENG),175.0,Egypt
+11.0,MF,MOSTAFA ZICO,Mostafa Mohamed Zaky,ABDELRAOUF,ZICO,1997-04-27,Pyramids FC (EGY),179.0,Egypt
+12.0,FW,HAISSEM HASSAN,Haissem Yousry Fouad A,HASSAN,H. HASSAN,2002-02-08,Real Oviedo (ESP),175.0,Egypt
+13.0,DF,AHMED FATOUH,Ahmed Mohamed Aboelfetouh,MOHAMED,A. FATOUH,1998-03-22,Zamalek SC (EGY),177.0,Egypt
+14.0,MF,HAMDY FATHY,Hamdy Fathy Abdelhalim,ABDELFATTAH,H. FATHY,1994-09-29,Al Wakrah SC (QAT),183.0,Egypt
+15.0,DF,KARIM HAFEZ,Karim Hafez Ramadan,SEIFELDIN,K. HAFEZ,1996-03-12,Pyramids FC (EGY),174.0,Egypt
+16.0,GK,MAHDY SOLIMAN,Mahdy Mohamed Soliman,IBRAHIM,M. SOLIMAN,1987-06-08,Zamalek SC (EGY),189.0,Egypt
+17.0,MF,MOHANAD LASHIN,Mohanad Mostafa Ahmed A,LASHIN,M. LASHIN,1996-05-29,Pyramids FC (EGY),186.0,Egypt
+18.0,MF,NABIL DONGA,Nabil Emad Aly Elmahdy,ALY,DONGA,1996-04-06,Al Najmah SC (KSA),179.0,Egypt
+19.0,MF,MARAWAN ATTIA,Marawan Attia Fahim,GHALLAB,M. ATTIA,1998-08-01,Al Ahly FC (EGY),176.0,Egypt
+20.0,FW,IBRAHIM ADEL,Ibrahim Adel Aly Mohamed,HASSAN,I. ADEL,2001-04-23,FC Nordsjælland (DEN),178.0,Egypt
+21.0,MF,MAHMOUD SABER,Mahmoud Saber Abdelmohsen H,ABDELMOHSEN,M. SABER,2001-07-30,ZED FC (EGY),170.0,Egypt
+22.0,FW,OMAR MARMOUSH,Omar Khaled Mohamed Abdelsalam,MARMOUSH,MARMOUSH,1999-02-07,Manchester City FC (ENG),180.0,Egypt
+23.0,GK,MOSTAFA SHOUBIR,Mostafa Ahmed Abdelaziz Mohame,SHOUBIR,SHOUBIR,2000-05-15,Al Ahly FC (EGY),195.0,Egypt
+24.0,DF,TAREK ALAA,Tarek Alaa Abdelghaffar Abdel,ELGEBALY,T. ALAA,2002-01-05,ZED FC (EGY),178.0,Egypt
+25.0,FW,ZIZO,Ahmed Mostafa Mohamed,SAYED,ZIZO,1996-01-10,Al Ahly FC (EGY),175.0,Egypt
+26.0,GK,MOHAMED ALAA,Mohamed Alaaeldin Soliman M,AHMED,M. ALAA,1999-01-01,El Gouna FC (EGY),188.0,Egypt
+13.5,Head coach,Unknown,Hossam Hassan Hassanein,HASSAN,Unknown,Unknown,Unknown,181.19230769230768,Egypt

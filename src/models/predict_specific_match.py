@@ -53,21 +53,26 @@ def predict_match(team1, team2):
     if f1 is not None and f2 is not None:
         # Calculate diffs
         diff = (f1 - f2).add_prefix("diff_")
-        
+
         # Re-order to match trained_features
         X = diff.to_frame().T
         for col in trained_features:
             if col not in X.columns:
                 X[col] = 0.0
         X = X[trained_features]
-        
+
         # Predict
         score_diff = oracle.predict(X)[0]
-        
-        result = "Draw"
-        if score_diff > 0: result = f"{team1} ({t1_canon}) wins by {score_diff:.f} goals"
-        elif score_diff < 0: result = f"{team2} ({t2_canon}) wins by {abs(score_diff):.f} goals"
-        
+
+        # Apply threshold for categorical interpretation
+        threshold = 0.33
+        if score_diff > threshold:
+            result = f"{team1} ({t1_canon}) wins"
+        elif score_diff < -threshold:
+            result = f"{team2} ({t2_canon}) wins"
+        else:
+            result = "Draw"
+
         logger.info(f"Match Prediction: {team1} vs {team2}")
         logger.info(f"Predicted Goal Difference: {score_diff:.2f}")
         logger.info(f"Result: {result}")

@@ -63,7 +63,7 @@ class TournamentSimulator:
                 
         return int(goals_a), int(goals_b)
         
-    def monte_carlo_match(self, team_a: Dict[str, Any], team_b: Dict[str, Any], iterations: int = 10000) -> Dict[str, float]:
+    def monte_carlo_match(self, team_a: Dict[str, Any], team_b: Dict[str, Any], iterations: int = 25000) -> Dict[str, float]:
         """
         Simulates a match N times to get probabilities.
         """

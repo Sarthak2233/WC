@@ -156,7 +156,19 @@ class FeatureConverger:
         tournament_context = self._load_tournament_context()
 
         # 6. Build Temporal Spine (1930 - 2026)
-        all_teams = sorted(list(set([standardize_country_name(t) for t in pd.concat([matches['home_team'], matches['away_team']]).unique() if t != 'Unknown'])))
+        historical_teams = set([standardize_country_name(t) for t in pd.concat([matches['home_team'], matches['away_team']]).unique() if t != 'Unknown'])
+        
+        # Add 2026 teams from squad lists
+        squad_files = glob.glob(os.path.join(self.processed_dir, 'fifawc26-squadlist-*.csv'))
+        teams_squad = set()
+        for f in squad_files:
+            team_name = os.path.basename(f).replace('fifawc26-squadlist-', '').replace('.csv', '')
+            teams_squad.add(standardize_country_name(team_name))
+        
+        # Add 2026 teams from existing 'perf' data
+        teams_2026 = set([standardize_country_name(t) for t in perf['team'].unique() if t != 'Unknown'])
+        
+        all_teams = sorted(list(historical_teams.union(teams_2026).union(teams_squad)))
         years = list(range(1930, 2027))
         logger.info(f"Constructed temporal spine for {len(all_teams)} teams over {len(years)} years.")
         

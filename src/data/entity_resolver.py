@@ -17,6 +17,10 @@ CUSTOM_MAPPING = {
     "IR Iran": "Iran",
     "Iran, Islamic Rep.": "Iran",
     "DR Congo": "Democratic Republic of the Congo",
+    "Bosnia and Herzegovina": "Bosnia and Herzegovina",
+    "Bosina and Herzegovina": "Bosnia and Herzegovina",
+    "Cape Verde": "Cabo Verde",
+    "Cabo Verde": "Cabo Verde",
     
     # Historical names (mapping to modern successor for continuity in ML models,
     # or kept separate if the user strictly prefers historical accuracy. 

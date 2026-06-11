@@ -18,6 +18,8 @@ COUNTRY_NAME_MAP = {
     "Democratic Republic of the Congo": "Congo DR",
     "Cabo Verde": "Cape Verde",
     "Curacao": "Curaçao",
+    "Bosnia and Herzegovina": "Bosnia and Herzegovina",
+    "Bosina and Herzegovina": "Bosnia and Herzegovina",
     "Netherlands": "Netherlands",
     "Holland": "Netherlands",
     "England": "England",

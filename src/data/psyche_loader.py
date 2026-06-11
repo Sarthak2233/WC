@@ -1,26 +1,25 @@
 import pandas as pd
 import logging
 import os
-from typing import Dict, Any, List
-from sqlalchemy.orm import Session
+from typing import List, Dict, Any
 
 from src.data.base_loader import BaseLoader
-from src.database import Player, SessionLocal
 
 logger = logging.getLogger(__name__)
 
 class PsycheLoader(BaseLoader):
     """
     Loads player psychological profiles derived from performance metrics.
-    Source: data/raw/Sets_More/fifa_world_cup_2026_player_performance.csv
+    Source: data/raw/fifa_world_cup_2026_player_performance.csv
+    Saves cleaned data to data/processed/.
     """
     
-    def __init__(self, session_factory):
-        self.session_factory = session_factory
+    def __init__(self):
         self.data_path = os.path.join("data", "raw", "fifa_world_cup_2026_player_performance.csv")
+        self.processed_dir = os.path.join("data", "processed")
+        os.makedirs(self.processed_dir, exist_ok=True)
         
     def extract(self) -> pd.DataFrame:
-        """Extracts performance data from local CSV."""
         logger.info(f"Extracting performance data from {self.data_path}...")
         try:
             return pd.read_csv(self.data_path)
@@ -28,50 +27,26 @@ class PsycheLoader(BaseLoader):
             logger.error(f"Failed to load CSV: {e}")
             return pd.DataFrame()
 
-    def transform(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        """
-        Derives psychological metrics (adversity/resilience) 
-        from performance data (consistency, pressure resistance).
-        """
+    def transform(self, df: pd.DataFrame) -> pd.DataFrame:
         if df.empty:
-            return []
+            return pd.DataFrame()
             
-        # Example logic: adversity score is inversely proportional to pressure resistance
-        # and consistency scores.
-        processed = []
-        # Group by player to get aggregate scores
         player_metrics = df.groupby('player_name').agg({
             'consistency_score': 'mean',
             'pressure_resistance': 'mean',
             'clutch_performance_score': 'mean'
         }).reset_index()
         
-        for _, row in player_metrics.iterrows():
-            # Higher pressure resistance/clutch = lower "adversity" need
-            score = 1.0 - (row['pressure_resistance'] + row['clutch_performance_score']) / 200
-            processed.append({
-                "name": row['player_name'],
-                "adversity_score": max(min(score, 1.0), 0.0)
-            })
-        return processed
-
-    def load(self, processed_data: List[Dict[str, Any]]) -> None:
-        """Loads adversity scores into wc_oracle (Player)."""
-        session = SessionLocal()
-        try:
-            for item in processed_data:
-                players = session.query(Player).filter(Player.name == item['name']).all()
-                for p in players:
-                    p.adversity_score = float(item["adversity_score"])
-            session.commit()
-            logger.info("Successfully updated Player database with adversity scores from performance data.")
-        except Exception as e:
-            session.rollback()
-            logger.error(f"Error loading adversity: {e}")
-        finally:
-            session.close()
-            
-    def run(self):
-        df = self.extract()
-        processed = self.transform(df)
-        self.load(processed)
+        player_metrics['adversity_score'] = player_metrics.apply(
+            lambda row: max(min(1.0 - (row['pressure_resistance'] + row['clutch_performance_score']) / 200, 1.0), 0.0),
+            axis=1
+        )
+        return player_metrics[['player_name', 'adversity_score']]
+        
+    def save_processed(self, df: pd.DataFrame) -> None:
+        """
+        Saves transformed data to CSV in data/processed/.
+        """
+        path = os.path.join(self.processed_dir, "player_psychology.csv")
+        df.to_csv(path, index=False)
+        logger.info(f"Saved player psychology data to {path}")

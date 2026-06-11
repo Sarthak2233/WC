@@ -2,6 +2,7 @@ import logging
 import pandas as pd
 import pickle
 import os
+import json
 from src.features.csv_oracle import CSVFeatureOracle
 from src.models.simulator import TournamentSimulator
 
@@ -28,36 +29,66 @@ def run_2026_prediction():
     logger.info("Building 2026 Team-Tournament feature matrix from CSVs...")
     matrix_2026 = oracle_engine.build_2026_matrix()
     
-    if matrix_2026.empty:
-        logger.error("2026 feature matrix is empty. Check data/processed CSV files.")
-        return
-        
-    logger.info(f"Matrix built. Teams: {len(matrix_2026)}")
+    # Load training feature names for alignment
+    with open("models/feature_names.json", "r") as f:
+        trained_features = json.load(f)
     
     # 3. Setup Simulator
+    # We will pass the full matrix to the simulator, not rebuild features
     simulator = TournamentSimulator(oracle)
     
-    # 4. Predict a Sample Match (e.g., USA vs Mexico)
-    # Ensure team names match the resolved standardized names
-    usa = matrix_2026[matrix_2026["team"] == "United States"].to_dict('records')
-    mex = matrix_2026[matrix_2026["team"] == "Mexico"].to_dict('records')
+    # 4. Predict a Sample Match (e.g., South Africa vs Mexico)
+    # Get team data dicts from the aligned matrix
+    def get_team_data(team_name):
+        # Use full matrix, not aligned
+        team_df = matrix_2026[matrix_2026["canonical_team"] == team_name]
+        if team_df.empty: return None
+        
+        # Ensure we return only the features, dropping metadata
+        features = team_df.iloc[0].drop('canonical_team', errors='ignore')
+        
+        # Align to trained_features order and fill missing with 0
+        feature_dict = {}
+        for feat in trained_features:
+            feature_dict[feat] = features.get(feat, 0.0)
+            
+        return pd.DataFrame([feature_dict])
+
+    south_africa_data = get_team_data("South Africa")
+    mex_data = get_team_data("Mexico")
     
-    if usa and mex:
-        usa = usa[0]
-        mex = mex[0]
-        probs = simulator.monte_carlo_match(usa, mex)
-        logger.info(f"Prediction for USA vs Mexico: {probs}")
+    if south_africa_data is not None and mex_data is not None:
+        # Re-calculate differences using identical logic as build_training_set
+        # south_africa_data and mex_data are DataFrames
+        f1 = south_africa_data.iloc[0]
+        f2 = mex_data.iloc[0]
+        
+        # Difference features: calculate for all prefixed features dynamically
+        # Ensure we use the exact same logic as in CSVFeatureOracle
+        diff = (f1 - f2).add_prefix("diff_")
+        
+        # The ensemble expects a 2D DataFrame with column names that match trained_features
+        X = diff.to_frame().T
+        
+        # Ensure X is aligned to trained_features order
+        for col in trained_features:
+            if col not in X.columns:
+                X[col] = 0.0
+        X = X[trained_features]
+        
+        probs = oracle.predict(X)
+        logger.info(f"Prediction for South Africa vs Mexico: {probs}")
     else:
-        # If teams not found, just predict the first two
-        t1 = matrix_2026.iloc[0].to_dict()
-        t2 = matrix_2026.iloc[1].to_dict()
-        probs = simulator.monte_carlo_match(t1, t2)
-        logger.info(f"Prediction for {t1['team']} vs {t2['team']}: {probs}")
+        logger.info("Teams not found for prediction.")
 
     # 5. Output Win Probabilities (Simple Ranking)
     logger.info("Top 10 Psychopolitical Power Ranking (2026):")
-    # Using the columns that exist in CSVFeatureOracle.get_team_features
-    print(matrix_2026[["team", "elo", "ppi", "uai", "ladder"]].sort_values("elo", ascending=False).head(10))
+    # Using the columns that exist in the converged matrix
+    # Mapping old expected names to new prefixed names
+    cols = ["canonical_team", "elo_elo", "conflict_intensity", "uai", "happiness_score"]
+    # Only select columns that exist in the matrix
+    cols_to_print = [c for c in cols if c in matrix_2026.columns]
+    print(matrix_2026[cols_to_print].sort_values(cols_to_print[1], ascending=False).head(10))
 
 if __name__ == "__main__":
     run_2026_prediction()

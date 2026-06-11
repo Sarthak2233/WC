@@ -15,14 +15,22 @@ class TournamentSimulator:
         
     def _create_match_features(self, team_a: Dict[str, Any], team_b: Dict[str, Any]) -> pd.DataFrame:
         """
-        Creates a feature vector representing a matchup using the 4 core psychopolitical layers.
+        Creates a feature vector representing a matchup using all 7 engineered features.
+        Maps converged prefixed features to core difference features.
         """
-        # Exactly the features used in CSVFeatureOracle.build_training_set
+        # Map prefixed features from converged data to core expected keys
+        # Example mapping: 'elo_ratings_csv__elo' -> 'elo'
+        def get_val(team_data, core_key, prefixed_key):
+            return float(team_data.get(prefixed_key, team_data.get(core_key, 0.0)))
+            
         diff = {
-            "diff_elo": float(team_a["elo"]) - float(team_b["elo"]),
-            "diff_ppi": float(team_a["ppi"]) - float(team_b["ppi"]),
-            "diff_uai": float(team_a["uai"]) - float(team_b["uai"]),
-            "diff_ladder": float(team_a["ladder"]) - float(team_b["ladder"])
+            "diff_elo": get_val(team_a, "elo", "elo_ratings_csv__elo") - get_val(team_b, "elo", "elo_ratings_csv__elo"),
+            "diff_ppi": get_val(team_a, "ppi", "conflict_data_csv__intensity") - get_val(team_b, "ppi", "conflict_data_csv__intensity"),
+            "diff_uai": get_val(team_a, "uai", "culture_happiness_csv__uai") - get_val(team_b, "uai", "culture_happiness_csv__uai"),
+            "diff_ladder": get_val(team_a, "ladder", "happiness_csv__happiness_score") - get_val(team_b, "ladder", "happiness_csv__happiness_score"),
+            "diff_clutch": get_val(team_a, "clutch_score_mean", "fifa_world_cup_2026_player_performance_csv__clutch_performance_score") - get_val(team_b, "clutch_score_mean", "fifa_world_cup_2026_player_performance_csv__clutch_performance_score"),
+            "diff_tech": get_val(team_a, "technical_floor", "fifa_world_cup_2026_player_performance_csv__performance_score") - get_val(team_b, "technical_floor", "fifa_world_cup_2026_player_performance_csv__performance_score"),
+            "diff_pedigree": get_val(team_a, "wc_pedigree", "tournaments_csv__final") - get_val(team_b, "wc_pedigree", "tournaments_csv__final")
         }
                 
         return pd.DataFrame([diff])

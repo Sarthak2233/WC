@@ -25,7 +25,7 @@ from typing import Dict, Any, List
 from sqlalchemy.orm import Session
 
 from src.data.base_loader import BaseLoader
-from src.database import Player, WorldCup
+
 
 logger = logging.getLogger(__name__)
 

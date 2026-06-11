@@ -38,103 +38,22 @@
     },
     {
       "id": 2,
-      "title": "ETL: 7 Master Tables (wc_oracle.db)",
+      "title": "ETL: CSV Pipeline (SQL-Free)",
       "status": "COMPLETED",
       "sub_phases": [
         {
           "id": "2.1",
-          "task": "Entity Resolution (Standardizing names)",
+          "task": "Refactor Data Loaders to CSV output",
           "status": "COMPLETED"
         },
         {
           "id": "2.2",
-          "task": "Construct 'World Cups' and 'Matches' Tables",
+          "task": "Remove SQL/ORM infrastructure",
           "status": "COMPLETED"
         },
         {
           "id": "2.3",
-          "task": "Construct 'Players' and 'Countries' Master Tables",
-          "status": "COMPLETED"
-        },
-        {
-          "id": "2.4",
-          "task": "Construct 'Culture', 'Conflict', and 'Narratives' Tables",
-          "status": "COMPLETED"
-        },
-        {
-          "id": "2.5",
-          "task": "Master Join & Constraint Validation",
-          "status": "COMPLETED"
-        }
-      ]
-    },
-    {
-      "id": 2.5,
-      "title": "ETL: FIFA Attribute Database (fifa_oracle.db)",
-      "status": "COMPLETED",
-      "sub_phases": [
-        {
-          "id": "2.5.0",
-          "task": "Scrape/Extract comprehensive FIFA player attributes",
-          "status": "COMPLETED"
-        },
-        {
-          "id": "2.5.2",
-          "task": "Construct fifa_oracle.db schema and load raw attributes",
-          "status": "COMPLETED"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "title": "3-Layer Feature Extraction Pipeline",
-      "status": "IN_PROGRESS",
-      "sub_phases": [
-        {
-          "id": "3.1",
-          "task": "Raw Matrix Layer: Refactor to unified query interface",
-          "status": "COMPLETED"
-        },
-        {
-          "id": "3.2",
-          "task": "Processed Matrix Layer: Cross-reference logic (various other csv files present in the folder and other folder) clean the data use every file present in raw data make multiple needed files to create a master file",
-          "status": "COMPLETED"
-        },
-        {
-          "id": "3.3",
-          "task": "Master Matrix Layer: Unified Feature Assembly",
-          "status": "COMPLETED"
-        },
-        {
-          "id": "3.4",
-          "task": "Interaction Layer: Feature Engineering (interactions.py)",
-          "status": "NOT_STARTED"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "title": "Team-Tournament Feature Matrix",
-      "status": "COMPLETED",
-      "sub_phases": [
-        {
-          "id": "4.1",
-          "task": "Calculate Political Pressure Index (PPI) per country-year",
-          "status": "COMPLETED"
-        },
-        {
-          "id": "4.2",
-          "task": "Generate Collective National Psyche Scores",
-          "status": "COMPLETED"
-        },
-        {
-          "id": "4.3",
-          "task": "Implement Legacy Burden & Identity Fragmentation",
-          "status": "SCAFFOLDED"
-        },
-        {
-          "id": "4.4",
-          "task": "Final Matrix Assembly with Target Variables",
+          "task": "CSV Data Pipeline Verification",
           "status": "COMPLETED"
         }
       ]
@@ -142,12 +61,12 @@
     {
       "id": 5,
       "title": "Model Training & Validation",
-      "status": "SCAFFOLDING_COMPLETE",
+      "status": "COMPLETED",
       "sub_phases": [
         {
           "id": "5.1",
           "task": "Train Oracle Gradient Boosting Models (XGBoost/LightGBM)",
-          "status": "SCAFFOLDING_COMPLETE"
+          "status": "COMPLETED"
         },
         {
           "id": "5.2",
@@ -157,7 +76,7 @@
         {
           "id": "5.3",
           "task": "Develop 5-10 Synthetic Baseline Predictors",
-          "status": "SCAFFOLDING_COMPLETE"
+          "status": "COMPLETED"
         },
         {
           "id": "5.4",

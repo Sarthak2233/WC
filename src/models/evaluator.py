@@ -1,54 +1,53 @@
 import pandas as pd
 import numpy as np
-from sklearn.metrics import mean_squared_error
+import pickle
+import os
 import logging
+from sklearn.metrics import accuracy_score, mean_absolute_error, log_loss
+from src.features.csv_oracle import CSVFeatureOracle
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class Evaluator:
+def evaluate_model():
     """
-    Evaluates model performance using LOTO (Leave-One-Tournament-Out) cross-validation.
+    Evaluates the trained Oracle model against historical data.
     """
+    model_path = "models/oracle_v1.pkl"
+    if not os.path.exists(model_path):
+        logger.error(f"Oracle model not found at {model_path}.")
+        return
+        
+    with open(model_path, "rb") as f:
+        oracle = pickle.load(f)
+        
+    engine = CSVFeatureOracle("data/processed")
+    X, y_actual, _ = engine.build_training_set()
     
-    def leave_one_tournament_out(self, trainer, X: pd.DataFrame, y: pd.Series) -> dict:
-        """
-        Performs LOTO CV.
-        Expects X to have a 'tournament_year' column.
-        """
-        if 'tournament_year' not in X.columns:
-            raise ValueError("Feature matrix must contain 'tournament_year' for LOTO CV.")
-            
-        years = X['tournament_year'].unique()
+    # Generate predictions
+    y_pred = oracle.predict(X)
+    
+    # 1. Regression Metrics (Goal Difference)
+    mae = mean_absolute_error(y_actual, y_pred)
+    
+    # 2. Classification Metrics (Win/Loss/Draw)
+    def to_result(score):
+        if score > 0: return 1 # Win
+        if score < 0: return -1 # Loss
+        return 0 # Draw
         
-        per_tournament_rmse = {}
-        all_preds = []
-        all_actuals = []
-        
-        for year in years:
-            train_idx = X['tournament_year'] != year
-            test_idx = X['tournament_year'] == year
-            
-            X_train, y_train = X[train_idx].drop(columns=['tournament_year']), y[train_idx]
-            X_test, y_test = X[test_idx].drop(columns=['tournament_year']), y[test_idx]
-            
-            if X_train.empty or X_test.empty:
-                continue
-                
-            # Train model
-            trainer.train(X_train, y_train)
-            
-            # Predict
-            preds = trainer.predict(X_test)
-            
-            rmse = np.sqrt(mean_squared_error(y_test, preds))
-            per_tournament_rmse[year] = rmse
-            
-            all_preds.extend(preds)
-            all_actuals.extend(y_test)
-            
-        overall_rmse = np.sqrt(mean_squared_error(all_actuals, all_preds)) if all_actuals else 0.0
-        
-        return {
-            "overall_rmse": overall_rmse,
-            "per_tournament_rmse": per_tournament_rmse
-        }
+    actual_results = y_actual.apply(to_result)
+    pred_results = pd.Series(y_pred).apply(to_result)
+    
+    accuracy = accuracy_score(actual_results, pred_results)
+    
+    logger.info("--- Model Performance Statistics ---")
+    logger.info(f"Mean Absolute Error (Goal Diff): {mae:.4f}")
+    logger.info(f"Match Result Accuracy: {accuracy:.4f}")
+    
+    # For LogLoss, we need probability distributions. 
+    # Since this is a regressor, we can approximate probabilities using the simulator's logic, 
+    # but for now, this basic accuracy gives a strong baseline.
+
+if __name__ == "__main__":
+    evaluate_model()

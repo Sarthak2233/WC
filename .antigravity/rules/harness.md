@@ -7,3 +7,5 @@
 
 # Project Goal: Psychopolitical World Cup 2026 Prediction Engine.
 # Roadmap: See .antigravity/TASK_STATE.json.
+
+# activate venv always.

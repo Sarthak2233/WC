@@ -14,13 +14,13 @@ class BaseLoader(ABC):
         pass
         
     @abstractmethod
-    def transform(self, raw_data: Any) -> pd.DataFrame:
-        """Transform raw data into the schema required by the Master Tables."""
+    def transform(self, raw_data: Any) -> Any:
+        """Transform raw data into the schema required."""
         pass
         
     @abstractmethod
-    def load(self, df: pd.DataFrame) -> None:
-        """Load the transformed data into the Master Tables."""
+    def save_processed(self, transformed_data: Any) -> None:
+        """Saves the transformed data to CSV."""
         pass
         
     def run(self) -> None:
@@ -28,14 +28,5 @@ class BaseLoader(ABC):
         raw_data = self.extract()
         if raw_data is not None:
             transformed_data = self.transform(raw_data)
-            # Fix: Avoid ambiguous truth value check for DataFrames
             if transformed_data is not None:
-                if isinstance(transformed_data, pd.DataFrame):
-                    if not transformed_data.empty:
-                        self.load(transformed_data)
-                elif isinstance(transformed_data, dict):
-                    if transformed_data:
-                        self.load(transformed_data)
-                else:
-                    # Fallback for other types
-                    self.load(transformed_data)
+                self.save_processed(transformed_data)

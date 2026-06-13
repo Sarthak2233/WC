@@ -4,24 +4,23 @@ import logging
 import os
 from io import StringIO
 from typing import Dict
-from sqlalchemy.orm import Session
 
 from src.data.base_loader import BaseLoader
-from src.fifa_database import PlayerRaw, FifaSessionLocal
 
 logger = logging.getLogger(__name__)
 
 class FifaLoader(BaseLoader):
     """
-    Loads raw FIFA player data (Layer 2.5) into fifa_oracle.db.
+    Loads raw FIFA player data (Layer 2.5) into a CSV file.
     """
     
     FIFA23_URL = "https://raw.githubusercontent.com/miraehab/FIFA-23-ML-Project/main/players_fifa23.csv"
     
-    def __init__(self, session_factory):
-        self.session_factory = session_factory
+    def __init__(self):
         self.raw_dir = os.path.join("data", "raw")
+        self.processed_dir = os.path.join("data", "processed")
         os.makedirs(self.raw_dir, exist_ok=True)
+        os.makedirs(self.processed_dir, exist_ok=True)
         
     def _fetch_csv(self, filename: str) -> pd.DataFrame:
         local_path = os.path.join(self.raw_dir, filename)
@@ -86,33 +85,20 @@ class FifaLoader(BaseLoader):
         cols_to_keep = [v for v in rename_map.values() if v in df.columns]
         return df[cols_to_keep]
         
-    def load(self, df: pd.DataFrame) -> None:
+    def save_processed(self, df: pd.DataFrame) -> None:
+        """
+        Saves player data to a CSV in data/processed/.
+        """
         if df.empty:
             return
+        
+        path = os.path.join(self.processed_dir, "players_fifa.csv")
+        
+        # Simple upsert logic: read existing, merge, write
+        if os.path.exists(path):
+            existing_df = pd.read_csv(path)
+            # Merge on full_name and nationality
+            df = pd.concat([existing_df, df]).drop_duplicates(subset=["full_name", "nationality"], keep="last")
             
-        session: Session = self.session_factory()
-        try:
-            for _, row in df.iterrows():
-                row_dict = row.to_dict()
-                # Assuming full_name + nationality is the unique key
-                existing = session.query(PlayerRaw).filter_by(
-                    full_name=row_dict["full_name"],
-                    nationality=row_dict["nationality"]
-                ).first()
-                
-                if not existing:
-                    session.add(PlayerRaw(**row_dict))
-                else:
-                    # Update existing with new values
-                    for k, v in row_dict.items():
-                        if pd.notna(v):
-                            setattr(existing, k, v)
-                
-            session.commit()
-            logger.info("Successfully loaded/updated Layer 2.5: FIFA Attribute Database.")
-        except Exception as e:
-            session.rollback()
-            logger.error(f"Error loading FIFA data: {e}")
-            raise
-        finally:
-            session.close()
+        df.to_csv(path, index=False)
+        logger.info(f"Successfully saved/updated Layer 2.5: FIFA Attribute CSV.")

@@ -1,30 +1,27 @@
 import pytest
+import os
+import pandas as pd
 from src.data.narrative_loader import NarrativeLoader
-from src.database import SessionLocal, init_db, Narrative
 
-@pytest.fixture(scope="module")
-def setup_db():
-    init_db()
-    yield SessionLocal
-
-def test_narrative_loader_run(setup_db):
-    loader = NarrativeLoader(setup_db)
+def test_narrative_loader_run():
+    loader = NarrativeLoader()
     
     # Run ETL (fetching GDELT)
     loader.run()
     
-    session = setup_db()
-    try:
-        # Check for recent data (USA or GBR)
-        usa_data = session.query(Narrative).filter_by(country_code="USA").first()
-        if usa_data:
-            assert usa_data.sentiment_score is not None
-            
-        # Check count
-        count = session.query(Narrative).count()
-        assert count > 0
-    finally:
-        session.close()
+    output_path = os.path.join("data", "processed", "narrative_data.csv")
+    assert os.path.exists(output_path)
+    
+    # Check data
+    df = pd.read_csv(output_path)
+    assert not df.empty
+    assert "country_code" in df.columns
+    assert "year" in df.columns
+    assert "sentiment_score" in df.columns
+    
+    # Check if we have data for a major country
+    usa_data = df[df["country_code"] == "USA"]
+    assert not usa_data.empty
 
 if __name__ == "__main__":
     pytest.main([__file__])

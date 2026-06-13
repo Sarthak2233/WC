@@ -1,11 +1,10 @@
 import requests
 import pandas as pd
 import logging
+import os
 from typing import Dict, Any, List
-from sqlalchemy.orm import Session
 
 from src.data.base_loader import BaseLoader
-from src.database import Player, Match
 
 logger = logging.getLogger(__name__)
 
@@ -21,8 +20,9 @@ class PerformanceLoader(BaseLoader):
         {"id": 43, "season_id": 3, "year": 2018}
     ]
     
-    def __init__(self, session_factory):
-        self.session_factory = session_factory
+    def __init__(self, session_factory=None):
+        self.processed_dir = os.path.join("data", "processed")
+        os.makedirs(self.processed_dir, exist_ok=True)
         
     def _fetch_json(self, path: str) -> Any:
         url = f"{self.BASE_URL}{path}"
@@ -37,8 +37,6 @@ class PerformanceLoader(BaseLoader):
     def extract(self) -> Dict[str, Any]:
         """
         Extracts match lists for analysis.
-        Processing full event data for every match is too heavy for a single run,
-        so we focus on match-level summaries and a sample of event data.
         """
         all_matches = []
         for comp in self.WC_COMPETITIONS:
@@ -57,8 +55,6 @@ class PerformanceLoader(BaseLoader):
         matches = raw_data.get("matches", [])
         data = []
         for m in matches:
-            # We can identify knockout matches by stage
-            # "Final", "Semi-finals", "Quarter-finals", "Round of 16"
             is_knockout = m.get("competition_stage", {}).get("name") != "Regular Season"
             
             data.append({
@@ -67,14 +63,14 @@ class PerformanceLoader(BaseLoader):
                 "home_team": m["home_team"]["home_team_name"],
                 "away_team": m["away_team"]["away_team_name"],
                 "is_knockout": is_knockout,
-                "penalties": m.get("home_score") == m.get("away_score") and is_knockout # Simplified
+                "penalties": m.get("home_score") == m.get("away_score") and is_knockout 
             })
         return pd.DataFrame(data)
         
-    def load(self, df: pd.DataFrame) -> None:
+    def save_processed(self, df: pd.DataFrame) -> None:
         """
-        Logs performance metadata processing.
-        Actual 'clutch' score will be computed in the Feature Engineering phase
-        by joining this metadata with match results and player lineups.
+        Saves transformed data to CSV in data/processed/.
         """
-        logger.info(f"Successfully processed {len(df)} matches from StatsBomb for Layer 2 analysis.")
+        path = os.path.join(self.processed_dir, "performance_metadata.csv")
+        df.to_csv(path, index=False)
+        logger.info(f"Saved performance metadata to {path}")

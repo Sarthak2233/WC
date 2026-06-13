@@ -1,0 +1,129 @@
+match_id,year,home_team,away_team,is_knockout,penalties
+3857276,2022,Canada,Morocco,True,False
+3857271,2022,England,Iran,True,False
+3857296,2022,Croatia,Belgium,True,True
+3857274,2022,Netherlands,Ecuador,True,True
+3857255,2022,Japan,Spain,True,False
+3857272,2022,England,United States,True,True
+3857278,2022,Iran,United States,True,False
+3857277,2022,Morocco,Croatia,True,True
+3857273,2022,Wales,Iran,True,False
+3857275,2022,Tunisia,France,True,False
+3857261,2022,Wales,England,True,False
+3857290,2022,Switzerland,Cameroon,True,False
+3857298,2022,Portugal,Ghana,True,False
+3857285,2022,Senegal,Netherlands,True,False
+3857282,2022,United States,Wales,True,True
+3857297,2022,Poland,Saudi Arabia,True,False
+3857294,2022,Netherlands,Qatar,True,False
+3857266,2022,France,Denmark,True,False
+3857284,2022,Germany,Japan,True,False
+3857254,2022,Denmark,Tunisia,True,True
+3857265,2022,Mexico,Poland,True,True
+3857301,2022,Qatar,Senegal,True,False
+3857268,2022,Belgium,Canada,True,False
+3857269,2022,Brazil,Switzerland,True,False
+3869321,2022,Netherlands,Argentina,True,True
+3857292,2022,Costa Rica,Germany,True,False
+3857295,2022,Japan,Costa Rica,True,False
+3869685,2022,Argentina,France,True,True
+3869684,2022,Croatia,Morocco,True,False
+3857256,2022,Serbia,Switzerland,True,False
+3869151,2022,Argentina,Australia,True,False
+3857257,2022,Australia,Denmark,True,False
+3857258,2022,Brazil,Serbia,True,False
+3857288,2022,Tunisia,Australia,True,False
+3857267,2022,Ecuador,Senegal,True,False
+3857287,2022,Uruguay,South Korea,True,True
+3869486,2022,Morocco,Portugal,True,False
+3857260,2022,Saudi Arabia,Mexico,True,False
+3857264,2022,Poland,Argentina,True,False
+3857289,2022,Argentina,Mexico,True,False
+3869254,2022,Portugal,Switzerland,True,False
+3869118,2022,England,Senegal,True,False
+3869519,2022,Argentina,Croatia,True,False
+3869354,2022,England,France,True,False
+3869552,2022,France,Morocco,True,False
+3869420,2022,Croatia,Brazil,True,True
+3869220,2022,Morocco,Spain,True,True
+3869219,2022,Japan,Croatia,True,True
+3869253,2022,Brazil,South Korea,True,False
+3869152,2022,France,Poland,True,False
+3869117,2022,Netherlands,United States,True,False
+3857270,2022,Portugal,Uruguay,True,False
+3857263,2022,Spain,Germany,True,True
+3857259,2022,Cameroon,Serbia,True,True
+3857283,2022,Belgium,Morocco,True,False
+3857286,2022,Qatar,Ecuador,True,False
+3857300,2022,Argentina,Saudi Arabia,True,False
+3857299,2022,South Korea,Ghana,True,False
+3857293,2022,Ghana,Uruguay,True,False
+3857291,2022,Spain,Costa Rica,True,False
+3857281,2022,Croatia,Canada,True,False
+3857280,2022,Cameroon,Brazil,True,False
+3857279,2022,France,Australia,True,False
+3857262,2022,South Korea,Portugal,True,False
+8650,2018,Brazil,Belgium,True,False
+7584,2018,Belgium,Japan,True,False
+7554,2018,England,Panama,True,False
+7539,2018,Poland,Senegal,True,False
+7550,2018,Serbia,Switzerland,True,False
+7538,2018,Sweden,South Korea,True,False
+7534,2018,Germany,Mexico,True,False
+7543,2018,Iran,Spain,True,False
+7544,2018,Uruguay,Saudi Arabia,True,False
+7546,2018,France,Peru,True,False
+7545,2018,Argentina,Croatia,True,False
+7585,2018,Colombia,England,True,True
+7569,2018,Panama,Tunisia,True,False
+7572,2018,Japan,Poland,True,False
+7561,2018,Iceland,Croatia,True,False
+7540,2018,Russia,Egypt,True,False
+7531,2018,Argentina,Iceland,True,True
+7570,2018,England,Belgium,True,False
+7586,2018,Sweden,Switzerland,True,False
+7557,2018,Iran,Portugal,True,True
+7542,2018,Portugal,Morocco,True,False
+8656,2018,Croatia,England,True,False
+7548,2018,Brazil,Costa Rica,True,False
+7578,2018,Egypt,Uruguay,True,False
+7553,2018,South Korea,Mexico,True,False
+7536,2018,Belgium,Panama,True,False
+7555,2018,Poland,Colombia,True,False
+7576,2018,Portugal,Spain,True,True
+7565,2018,Serbia,Brazil,True,False
+7551,2018,Germany,Sweden,True,False
+7537,2018,Tunisia,England,True,False
+7580,2018,France,Argentina,True,False
+7581,2018,Croatia,Denmark,True,True
+7549,2018,Nigeria,Iceland,True,False
+7529,2018,Croatia,Nigeria,True,False
+7562,2018,Australia,Peru,True,False
+7571,2018,Senegal,Colombia,True,False
+7568,2018,Switzerland,Costa Rica,True,True
+7530,2018,France,Australia,True,False
+7558,2018,Uruguay,Russia,True,False
+7583,2018,Brazil,Mexico,True,False
+7547,2018,Denmark,Australia,True,True
+7535,2018,Costa Rica,Serbia,True,False
+8649,2018,Uruguay,France,True,False
+8658,2018,France,Croatia,True,False
+7582,2018,Spain,Russia,True,True
+7552,2018,Belgium,Tunisia,True,False
+7532,2018,Peru,Denmark,True,False
+7560,2018,Spain,Morocco,True,True
+7533,2018,Brazil,Switzerland,True,True
+7564,2018,Nigeria,Argentina,True,False
+7579,2018,Uruguay,Portugal,True,False
+7577,2018,Morocco,Iran,True,False
+7525,2018,Russia,Saudi Arabia,True,False
+7566,2018,Mexico,Sweden,True,False
+8651,2018,Sweden,England,True,False
+7567,2018,South Korea,Germany,True,False
+7541,2018,Colombia,Japan,True,False
+8655,2018,France,Belgium,True,False
+8657,2018,Belgium,England,True,False
+8652,2018,Russia,Croatia,True,True
+7563,2018,Denmark,France,True,True
+7556,2018,Japan,Senegal,True,True
+7559,2018,Saudi Arabia,Egypt,True,False

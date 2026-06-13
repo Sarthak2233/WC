@@ -1,4 +1,5 @@
 import pycountry
+from functools import lru_cache
 
 # A hash map for O(1) resolution of common alternative and historical names.
 # This ensures we adhere to the DSA_POLICY.md for efficient lookups.
@@ -16,6 +17,10 @@ CUSTOM_MAPPING = {
     "IR Iran": "Iran",
     "Iran, Islamic Rep.": "Iran",
     "DR Congo": "Democratic Republic of the Congo",
+    "Bosnia and Herzegovina": "Bosnia and Herzegovina",
+    "Bosina and Herzegovina": "Bosnia and Herzegovina",
+    "Cape Verde": "Cabo Verde",
+    "Cabo Verde": "Cabo Verde",
     
     # Historical names (mapping to modern successor for continuity in ML models,
     # or kept separate if the user strictly prefers historical accuracy. 
@@ -31,6 +36,7 @@ CUSTOM_MAPPING = {
     "Dutch East Indies": "Indonesia",
 }
 
+@lru_cache(maxsize=1024)
 def resolve_country_name(name: str) -> str:
     """
     Resolves a country name to a standardized modern name.
@@ -101,6 +107,7 @@ def resolve_fips_to_iso3(fips: str) -> str | None:
     return FIPS_TO_ISO3.get(fips.upper()) if fips else None
 
 
+@lru_cache(maxsize=1024)
 def get_iso3_code(name: str) -> str | None:
     """
     Gets the ISO-3166-1 alpha-3 code for a country name or alternative name.

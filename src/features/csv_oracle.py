@@ -2,7 +2,10 @@ import pandas as pd
 import numpy as np
 import os
 import logging
-from src.data.entity_resolver import resolve_country_name, get_iso3_code
+import json
+from src.features.feature_converger import FeatureConverger
+from src.utils.entity_mapper import standardize_country_name
+from src.data.entity_resolver import get_iso3_code, resolve_country_name  # fallback resolver
 
 logger = logging.getLogger(__name__)
 
@@ -14,109 +17,174 @@ class CSVFeatureOracle:
     
     def __init__(self, processed_dir: str = "data/processed"):
         self.processed_dir = processed_dir
-        self._load_base_data()
+        self.converger = FeatureConverger(processed_dir)
+        self.converger.run()
+        # Surface key converger layers for downstream access/tests
+        for attr in ['pol_econ','conflict','elo','fifa23','perf_2026','hofstede','happiness','tournament_context']:
+            setattr(self, attr, getattr(self.converger, attr, pd.DataFrame()))
+
+        self.unified_features = pd.read_csv(self.converger.master_features_path)
+        with open(self.converger.manifest_path, 'r') as f:
+            self.loaded_files = json.load(f)["source_files"]
         
-    def _load_base_data(self):
-        logger.info("Loading base psychopolitical datasets...")
-        self.hofstede = pd.read_csv(os.path.join(self.processed_dir, "hofstede.csv"))
-        self.happiness = pd.read_csv(os.path.join(self.processed_dir, "happiness.csv"))
-        self.conflict = pd.read_csv(os.path.join(self.processed_dir, "UcdpPrioConflict_v25_1.csv"))
-        self.elo_2026 = pd.read_csv(os.path.join(self.processed_dir, "elo.csv"))
-        
-        # Standardize country names once
-        self.hofstede["country"] = self.hofstede["country"].apply(resolve_country_name)
-        # Happiness usually has 'country_name' or 'country'
-        happy_col = 'country_name' if 'country_name' in self.happiness.columns else 'country'
-        self.happiness["country"] = self.happiness[happy_col].apply(resolve_country_name)
-        
-    def get_team_features(self, team_name: str, year: int) -> dict:
+    def get_team_features(self, team_name: str, year: int) -> pd.Series:
         """
-        Retrieves the 11-layer psychopolitical features for a team in a specific year.
+        Retrieves all features for a team in a specific year. If the canonical
+        lookup fails, attempts several fallbacks and finally builds a proxy by
+        aggregating (median) features for the requested year so predictions can
+        still be produced for missing teams.
         """
-        team_std = resolve_country_name(team_name)
-        iso3 = get_iso3_code(team_std)
+        team_std = standardize_country_name(team_name)
+        # If standardizer returns Unknown, try resolver as last resort
+        if team_std == 'Unknown':
+            team_std = resolve_country_name(team_name)
         
-        # 1. Cultural (Static)
-        hof = self.hofstede[self.hofstede["country"] == team_std]
-        uai = hof["uai"].values[0] if not hof.empty else 50.0
-        pdi = hof["pdi"].values[0] if not hof.empty else 50.0
-        
-        # 2. Happiness (National Narrative)
-        happy = self.happiness[self.happiness["country"] == team_std]
-        # In this CSV, it's called 'happiness_score'
-        ladder = happy["happiness_score"].mean() if not happy.empty else 5.0
-        
-        # 3. Conflict (Political Pressure)
-        # Search conflict by sidea or sideb
-        side_col = 'sidea' if 'sidea' in self.conflict.columns else 'side_a'
-        team_conflict = self.conflict[
-            (self.conflict[side_col].str.contains(team_std, na=False)) & 
-            (self.conflict["year"] == year)
+        features = self.unified_features[
+            (self.unified_features["canonical_team"] == team_std) & 
+            (self.unified_features["year"] == year)
         ]
         
-        # In this CSV, the intensity column name is 'intensity_level'
-        intensity_col = 'intensity_level' if 'intensity_level' in self.conflict.columns else 'intensity'
-        intensity = team_conflict[intensity_col].max() if not team_conflict.empty else 0.0
-        
-        # 4. PPI Synthetic
-        # Simple version: intensity + low happiness
-        ppi = (float(intensity) * 0.7) + ((1.0 - (ladder/10.0)) * 0.3)
-        
-        # 5. Elo (For 2026 use current, for historical we'd need a time-series Elo)
-        # Since we don't have historical Elo CSV yet, we'll use a neutral base if historical
-        if year == 2026:
-            elo_row = self.elo_2026[self.elo_2026["team"] == team_name]
-            elo = elo_row["elo"].values[0] if not elo_row.empty else 1500.0
-        else:
-            elo = 1500.0 # Placeholder for historical
-            
-        return {
-            "team": team_std,
-            "year": year,
-            "elo": elo,
-            "ppi": ppi,
-            "uai": uai,
-            "pdi": pdi,
-            "ladder": ladder
-        }
+        cols_to_drop = ["canonical_team", "year"]
 
-    def build_training_set(self):
+        if not features.empty:
+            row = features.iloc[0]
+            if "index" in row.index: cols_to_drop.append("index")
+            if "level_0" in row.index: cols_to_drop.append("level_0")
+            features_series = row.drop(cols_to_drop, errors='ignore')
+            # Ensure numeric types only
+            numeric_features = pd.to_numeric(features_series, errors='coerce')
+            return numeric_features.fillna(0)
+
+        # Fallbacks - avoid noisy repeated warnings: log only once per missing canonical
+        if not hasattr(self, '_logged_missing'):
+            self._logged_missing = set()
+        if team_std not in getattr(self, '_logged_missing'):
+            logger.info(f"Canonical lookup did not find exact match for '{team_name}' (canonical: '{team_std}'). Attempting fallbacks.")
+            self._logged_missing.add(team_std)
+
+        # 1) Try ascii-normalized exact or substring matches to canonical_team in same year
+        norm = team_std.encode('ascii', 'ignore').decode('ascii').lower()
+        candidates = self.unified_features[self.unified_features['year'] == year]['canonical_team'].dropna().unique()
+
+        for c in candidates:
+            cnorm = c.encode('ascii', 'ignore').decode('ascii').lower()
+            if norm == cnorm:
+                row = self.unified_features[(self.unified_features['canonical_team'] == c) & (self.unified_features['year'] == year)].iloc[0]
+                if "index" in row.index: cols_to_drop.append("index")
+                if "level_0" in row.index: cols_to_drop.append("level_0")
+                features_series = row.drop(cols_to_drop, errors='ignore')
+                numeric_features = pd.to_numeric(features_series, errors='coerce')
+                return numeric_features.fillna(0)
+
+        for c in candidates:
+            cnorm = c.encode('ascii', 'ignore').decode('ascii').lower()
+            if norm in cnorm or cnorm in norm:
+                row = self.unified_features[(self.unified_features['canonical_team'] == c) & (self.unified_features['year'] == year)].iloc[0]
+                if "index" in row.index: cols_to_drop.append("index")
+                if "level_0" in row.index: cols_to_drop.append("level_0")
+                features_series = row.drop(cols_to_drop, errors='ignore')
+                numeric_features = pd.to_numeric(features_series, errors='coerce')
+                return numeric_features.fillna(0)
+
+        # 2b) Try resolver / ISO3 equivalence to match name variants (e.g., 'Czechia' vs 'Czech Republic')
+        try:
+            target_iso = get_iso3_code(team_std)
+        except Exception:
+            target_iso = None
+
+        for c in candidates:
+            try:
+                # If resolver maps candidate to same canonical, accept it
+                if resolve_country_name(c) == team_std:
+                    row = self.unified_features[(self.unified_features['canonical_team'] == c) & (self.unified_features['year'] == year)].iloc[0]
+                    if "index" in row.index: cols_to_drop.append("index")
+                    if "level_0" in row.index: cols_to_drop.append("level_0")
+                    features_series = row.drop(cols_to_drop, errors='ignore')
+                    numeric_features = pd.to_numeric(features_series, errors='coerce')
+                    return numeric_features.fillna(0)
+
+                # Compare ISO3 codes when available
+                iso_c = get_iso3_code(c)
+                if target_iso and iso_c and iso_c == target_iso:
+                    row = self.unified_features[(self.unified_features['canonical_team'] == c) & (self.unified_features['year'] == year)].iloc[0]
+                    if "index" in row.index: cols_to_drop.append("index")
+                    if "level_0" in row.index: cols_to_drop.append("level_0")
+                    features_series = row.drop(cols_to_drop, errors='ignore')
+                    numeric_features = pd.to_numeric(features_series, errors='coerce')
+                    return numeric_features.fillna(0)
+            except Exception:
+                # ignore per-candidate failures and continue
+                continue
+
+        # 3) As a last resort, return the per-feature median for the requested year
+        year_df = self.unified_features[self.unified_features['year'] == year]
+        if not year_df.empty:
+            # numeric median across year-level teams
+            num_df = year_df.select_dtypes(include=['number']).copy()
+            if 'year' in num_df.columns:
+                num_df = num_df.drop(columns=['year'], errors='ignore')
+            med = num_df.median()
+            # med is a Series indexed by numeric columns; return with same index order as features normally are
+            # Construct a full-feature Series matching the structure of a typical team row
+            sample_cols = [c for c in year_df.columns if c not in ('canonical_team','year')]
+            med_series = med.reindex(sample_cols, fill_value=0)
+            return med_series.fillna(0)
+
+        # If all else fails, return empty series
+        return pd.Series(dtype=float)
+
+    def build_absolute_training_set(self):
         """
-        Builds X, y from matches.csv
+        Builds X_home, y_home, X_away, y_away, matches from matches.csv
         """
-        matches = pd.read_csv(os.path.join(self.processed_dir, "matches.csv"))
-        X_rows = []
-        y_vals = []
+        matches_path = os.path.join(self.processed_dir, "matches.csv")
+        if not os.path.exists(matches_path):
+            logger.error(f"matches.csv not found at {matches_path}")
+            return pd.DataFrame(), pd.Series(), pd.DataFrame(), pd.Series(), pd.DataFrame()
+
+        matches = pd.read_csv(matches_path)
+        x_home_rows = []
+        x_away_rows = []
+        y_home_vals = []
+        y_away_vals = []
+        valid_indices = []
         
-        logger.info(f"Processing {len(matches)} historical matches...")
+        logger.info(f"Processing {len(matches)} historical matches for absolute training...")
         
-        for _, m in matches.iterrows():
-            year = int(m["tournament_id"].split("-")[1])
-            t1 = m["home_team_name"]
-            t2 = m["away_team_name"]
+        # Determine column names (handle home_team vs home_team_name)
+        home_col = 'home_team' if 'home_team' in matches.columns else 'home_team_name'
+        away_col = 'away_team' if 'away_team' in matches.columns else 'away_team_name'
+        year_col = 'year' if 'year' in matches.columns else ('tournament_year' if 'tournament_year' in matches.columns else None)
+        
+        for idx, m in matches.iterrows():
+            year = int(m[year_col]) if year_col else 2026
+            t1 = m[home_col]
+            t2 = m[away_col]
             
             f1 = self.get_team_features(t1, year)
             f2 = self.get_team_features(t2, year)
             
-            # Difference features
-            diff = {
-                "diff_elo": f1["elo"] - f2["elo"],
-                "diff_ppi": f1["ppi"] - f2["ppi"],
-                "diff_uai": f1["uai"] - f2["uai"],
-                "diff_ladder": f1["ladder"] - f2["ladder"]
-            }
+            if f1.empty or f2.empty:
+                continue
+                
+            x_home_rows.append(f1)
+            x_away_rows.append(f2)
+            y_home_vals.append(m["home_team_score"])
+            y_away_vals.append(m["away_team_score"])
+            valid_indices.append(idx)
             
-            X_rows.append(diff)
-            y_vals.append(m["home_team_score"] - m["away_team_score"])
-            
-        return pd.DataFrame(X_rows), pd.Series(y_vals)
+        return pd.DataFrame(x_home_rows), pd.Series(y_home_vals), pd.DataFrame(x_away_rows), pd.Series(y_away_vals), matches.loc[valid_indices]
 
     def build_2026_matrix(self):
         """
-        Builds the 2026 contender matrix.
+        Builds the 2026 contender matrix with all features.
         """
-        teams_2026 = pd.read_csv(os.path.join(self.processed_dir, "wc_2026_teams.csv"))
-        rows = []
-        for _, t in teams_2026.iterrows():
-            rows.append(self.get_team_features(t["team"], 2026))
-        return pd.DataFrame(rows)
+        # Start with the unified features specifically for the year 2026
+        features_2026 = self.unified_features[self.unified_features['year'] == 2026].copy()
+
+        # Ensure the 'canonical_team' column is present.
+        if 'canonical_team' not in features_2026.columns:
+            logger.error("Unified features missing 'canonical_team' column.")
+            return pd.DataFrame()
+
+        return features_2026

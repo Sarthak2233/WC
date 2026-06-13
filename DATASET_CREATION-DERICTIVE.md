@@ -1,4 +1,4 @@
-If you want to build the **most insane World Cup prediction dataset ever**, you should not rely on just FIFA and Wikipedia. You need to create **multiple dataset layers**, 2 database wc_oracle.db and fifa_oracle.db with is speaciality to create 3 data in the outer data folder to keep the single csv file before feeding it to the model. From the folowing references you need to create 2 database in this project. Extract raw matrix, process matrix with crossreference to fifa_oracle.db, master matrix for model input.
+If you want to build the **most insane World Cup prediction dataset ever**, you should not rely on just FIFA and Wikipedia. You need to create **multiple dataset layers**
 
 # 1. Football Match & Tournament Data
 

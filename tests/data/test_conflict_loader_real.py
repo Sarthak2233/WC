@@ -1,30 +1,31 @@
 import pytest
+import os
+import pandas as pd
 from src.data.conflict_loader import ConflictLoader
-from src.database import SessionLocal, init_db, Conflict
 
-@pytest.fixture(scope="module")
-def setup_db():
-    init_db()
-    yield SessionLocal
-
-def test_conflict_loader_run(setup_db):
-    loader = ConflictLoader(setup_db)
+def test_conflict_loader_run():
+    # Remove existing processed file if it exists to ensure fresh run
+    processed_file = "data/processed/conflict_data.csv"
+    if os.path.exists(processed_file):
+        os.remove(processed_file)
+        
+    loader = ConflictLoader()
     
-    # Run ETL (fetching UCDP ZIP)
+    # Run ETL
     loader.run()
     
-    session = setup_db()
-    try:
-        # Check for historical data (e.g., Vietnam or Ukraine)
-        ukr_data = session.query(Conflict).filter_by(country_code="UKR", year=2022).first()
-        if ukr_data:
-            assert ukr_data.intensity > 0
-            
-        # Check count
-        count = session.query(Conflict).count()
-        assert count > 100
-    finally:
-        session.close()
+    # Check for processed file
+    assert os.path.exists(processed_file)
+    
+    # Read and check content
+    df = pd.read_csv(processed_file)
+    assert not df.empty
+    assert "country_code" in df.columns
+    assert "intensity" in df.columns
+    
+    # Check for historical data (e.g., Ukraine)
+    ukr_data = df[df["country_code"] == "UKR"]
+    assert not ukr_data.empty
 
 if __name__ == "__main__":
     pytest.main([__file__])

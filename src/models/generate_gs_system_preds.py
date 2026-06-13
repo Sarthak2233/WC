@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import pickle
 import os
 import json
@@ -9,35 +10,35 @@ from src.utils.entity_mapper import standardize_country_name
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def generate_system_predictions():
-    # 1. Load the Oracle
-    model_path = "models/oracle_v1.pkl"
+def generate_gs_system_predictions():
+    # 1. Load the Consensus Oracle
+    model_path = "models/v3/Consensus/consensus_model.pkl"
     if not os.path.exists(model_path):
-        logger.error(f"Oracle model not found at {model_path}.")
+        logger.error(f"Consensus Oracle model not found at {model_path}.")
         return
         
     with open(model_path, "rb") as f:
-        oracle = pickle.load(f)
+        consensus_oracle = pickle.load(f)
     
     # 2. Build 2026 Feature Matrix
     oracle_engine = CSVFeatureOracle("data/processed")
     matrix_2026 = oracle_engine.build_2026_matrix()
     
     # Load training feature names for alignment
-    with open("models/feature_names.json", "r") as f:
+    with open("models/v3/feature_names.json", "r") as f:
         trained_features = json.load(f)
     
-    # 3. Load user predictions
+    # 3. Load user matches to predict
     user_preds_path = "models/user_predictions_2026.csv"
     if not os.path.exists(user_preds_path):
         logger.error(f"User predictions file not found at {user_preds_path}.")
         return
     
-    user_preds = pd.read_csv(user_preds_path)
+    user_matches = pd.read_csv(user_preds_path)
     
     system_results = []
     
-    logger.info("Generating system predictions for all group stage matches...")
+    logger.info("Generating system predictions using Consensus Oracle...")
     
     def get_team_data(team_name):
         team_canon = standardize_country_name(team_name)
@@ -51,26 +52,30 @@ def generate_system_predictions():
         
         feature_dict = {}
         for feat in trained_features:
-            feature_dict[feat.replace("diff_", "")] = features.get(feat.replace("diff_", ""), 0.0)
+            val = features.get(feat, 0.0)
+            feature_dict[feat] = pd.to_numeric(val, errors='coerce')
             
-        return pd.Series(feature_dict)
+        return pd.Series(feature_dict).fillna(0)
 
-    for _, row in user_preds.iterrows():
+    for _, row in user_matches.iterrows():
         f1 = get_team_data(row['home_team'])
         f2 = get_team_data(row['away_team'])
         
         if f1 is not None and f2 is not None:
-            diff = (f1 - f2).add_prefix("diff_")
-            X = diff.to_frame().T
-            for col in trained_features:
-                if col not in X.columns:
-                    X[col] = 0.0
-            X = X[trained_features]
+            # Prepare Inputs for Consensus
+            X1 = f1.to_frame().T
+            X2 = f2.to_frame().T
             
-            score_diff = oracle.predict(X)[0]
+            # Use Poisson sub-model goals for consistency: predicted_diff := h_goals - a_goals
+            h_goals = consensus_oracle.poisson.home_model.predict(X1)[0]
+            a_goals = consensus_oracle.poisson.away_model.predict(X2)[0]
+            try:
+                score_diff = float(h_goals) - float(a_goals)
+            except Exception:
+                score_diff = 0.0
             
             # Threshold categorization
-            threshold = 0.20
+            threshold = 0.1
             if score_diff > threshold:
                 result = "Win"
             elif score_diff < -threshold:
@@ -82,16 +87,23 @@ def generate_system_predictions():
                 "date": row['date'],
                 "home_team": row['home_team'],
                 "away_team": row['away_team'],
+                "predicted_home_goals": h_goals,
+                "predicted_away_goals": a_goals,
                 "predicted_diff": score_diff,
                 "predicted_result": result
             })
-        else:
-            logger.warning(f"Could not predict match: {row['home_team']} vs {row['away_team']}")
+
             
     # Save results
-    system_df = pd.DataFrame(system_results)
-    system_df.to_csv("models/system_prediction.csv", index=False)
-    logger.info("System predictions saved to models/system_prediction.csv")
+    if system_results:
+        system_df = pd.DataFrame(system_results)
+    else:
+        logger.warning("No predictions generated.")
+        system_df = pd.DataFrame(columns=["date", "home_team", "away_team", "predicted_home_goals", "predicted_away_goals", "predicted_diff", "predicted_result"])
+        
+    # Save as prediction_summary.csv for bootstrap dashboard
+    system_df.to_csv("models/prediction_summary.csv", index=False)
+    logger.info("System predictions saved to models/system_prediction.csv and models/prediction_summary.csv")
 
 if __name__ == "__main__":
-    generate_system_predictions()
+    generate_gs_system_predictions()

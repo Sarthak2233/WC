@@ -17,13 +17,6 @@ DATA_MASTER = DATA_DIR / "master"
 for path in [DATA_RAW, DATA_PROCESSED, DATA_MASTER]:
     path.mkdir(parents=True, exist_ok=True)
 
-# Database
-# Using SQLite for lightweight development as requested
-DB_PATH = PROJECT_ROOT / "wc_oracle.db"
-DATABASE_URL = f"sqlite:///{DB_PATH}"
-
-FIFA_DB_PATH = PROJECT_ROOT / "fifa_oracle.db"
-FIFA_DATABASE_URL = f"sqlite:///{FIFA_DB_PATH}"
 
 # Global random seed for reproducibility
 RANDOM_SEED = 42
@@ -45,7 +38,7 @@ logging.basicConfig(
     level=LOG_LEVEL,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler(PROJECT_ROOT / "oracle.log"),
+        logging.FileHandler(PROJECT_ROOT/logs / "oracle.log"),
         logging.StreamHandler()
     ]
 )

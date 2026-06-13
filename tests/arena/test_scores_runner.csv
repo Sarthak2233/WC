@@ -1,0 +1,2 @@
+participant_name,match_id,stage,predicted_home,predicted_away,actual_home,actual_away,points,is_exact,is_knockout,scored_at
+UserA,201,Group Stage,2,1,2,1,100,True,False,2026-06-12T13:47:50.314062+00:00

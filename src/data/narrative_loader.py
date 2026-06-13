@@ -1,27 +1,27 @@
 import pandas as pd
-import requests
 import logging
+import os
+import requests
+import time
 from typing import Dict, Any, List
-from sqlalchemy.orm import Session
 
 from src.data.base_loader import BaseLoader
 from src.data.entity_resolver import resolve_fips_to_iso3
-from src.database import Narrative
 
 logger = logging.getLogger(__name__)
-
-import time
 
 class NarrativeLoader(BaseLoader):
     """
     Loads narrative data (Layer 11) from GDELT DOC API 2.0.
     Fetches sentiment (tone) timelines for countries.
+    Saves cleaned data to data/processed/.
     """
     
     BASE_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
     
-    def __init__(self, session_factory):
-        self.session_factory = session_factory
+    def __init__(self):
+        self.processed_dir = os.path.join("data", "processed")
+        os.makedirs(self.processed_dir, exist_ok=True)
         
     def _fetch_tone_timeline(self, fips_code: str) -> List[Dict[str, Any]]:
         params = {
@@ -88,35 +88,10 @@ class NarrativeLoader(BaseLoader):
         agg = df.groupby(["country_code", "year"])["sentiment_score"].mean().reset_index()
         return agg
         
-    def load(self, df: pd.DataFrame) -> None:
+    def save_processed(self, df: pd.DataFrame) -> None:
         """
-        Loads narrative data into the Narrative table.
+        Saves transformed data to CSV in data/processed/.
         """
-        if df.empty:
-            return
-            
-        session: Session = self.session_factory()
-        try:
-            for _, row in df.iterrows():
-                existing = session.query(Narrative).filter_by(
-                    country_code=row["country_code"],
-                    year=row["year"]
-                ).first()
-                
-                if not existing:
-                    session.add(Narrative(
-                        country_code=row["country_code"],
-                        year=row["year"],
-                        sentiment_score=row["sentiment_score"]
-                    ))
-                else:
-                    existing.sentiment_score = row["sentiment_score"]
-                    
-            session.commit()
-            logger.info("Successfully loaded Layer 11: Narrative data.")
-        except Exception as e:
-            session.rollback()
-            logger.error(f"Error loading narrative data: {e}")
-            raise
-        finally:
-            session.close()
+        path = os.path.join(self.processed_dir, "narrative_data.csv")
+        df.to_csv(path, index=False)
+        logger.info(f"Saved narrative data to {path}")

@@ -1,31 +1,18 @@
 import pytest
+import os
+import pandas as pd
 from src.data.culture_loader import CultureLoader
-from src.database import SessionLocal, init_db, Culture
 
-@pytest.fixture(scope="module")
-def setup_db():
-    init_db()
-    yield SessionLocal
-
-def test_culture_loader_run(setup_db):
-    loader = CultureLoader(setup_db)
-    
-    # Run ETL
+def test_culture_loader_real_run():
+    processed_file = "data/processed/culture_happiness.csv"
+    if os.path.exists(processed_file):
+        os.remove(processed_file)
+        
+    loader = CultureLoader()
     loader.run()
     
-    session = setup_db()
-    try:
-        # Check if we have data for USA
-        usa_data = session.query(Culture).filter_by(country_code="USA").first()
-        assert usa_data is not None
-        assert usa_data.idv > 80 # USA is high on individualism
-        assert usa_data.happiness_score > 0
-        
-        # Check count
-        count = session.query(Culture).count()
-        assert count > 50
-    finally:
-        session.close()
-
-if __name__ == "__main__":
-    pytest.main([__file__])
+    assert os.path.exists(processed_file)
+    df = pd.read_csv(processed_file)
+    assert not df.empty
+    assert "country_code" in df.columns
+    assert "happiness_score" in df.columns

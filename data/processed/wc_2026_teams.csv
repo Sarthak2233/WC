@@ -1,7 +1,7 @@
 team,group,confederation,fifa_rank,coach,best_wc_result,debut_2026
 Mexico,A,CONCACAF,15,Javier Aguirre,"Quarter-finals (1970,1986)",No
 South Africa,A,CAF,60,Hugo Broos,"Group stage (1998,2002,2010)",No
-Korea Republic,A,AFC,25,Hong Myung-bo,Semi-finals (2002),No
+South Korea,A,AFC,25,Hong Myung-bo,Semi-finals (2002),No
 Czech Republic,A,UEFA,41,Ivan Hasek,"Runner-up (1934,1962)",No
 Canada,B,CONCACAF,30,Jesse Marsch,"Group stage (1986,2022)",No
 Switzerland,B,UEFA,19,Murat Yakin,"Quarter-finals (1934,1938,1954)",No
@@ -28,7 +28,7 @@ Egypt,G,CAF,29,Hossam El-Badry,Round of 16 (1934),No
 Iran,G,AFC,21,Amir Ghalenoei,Group stage (6 apps),No
 New Zealand,G,OFC,95,Darren Bazeley,"Group stage (1982,2010)",No
 Spain,H,UEFA,2,Luis de la Fuente,Winners (2010),No
-Cape Verde,H,CAF,70,Pedro Brito,First appearance,Yes
+Cabo Verde,H,CAF,70,Pedro Brito,First appearance,Yes
 Saudi Arabia,H,AFC,57,Roberto Mancini,Round of 16 (1994),No
 Uruguay,H,CONMEBOL,17,Marcelo Bielsa,"Winners (1930,1950)",No
 France,I,UEFA,1,Didier Deschamps,"Winners (1998,2018)",No
@@ -40,7 +40,7 @@ Algeria,J,CAF,36,Vladimir Petkovic,Round of 16 (2014),No
 Austria,J,UEFA,23,Ralf Rangnick,Third place (1954),No
 Jordan,J,AFC,68,Hussain Ammouta,First appearance,Yes
 Portugal,K,UEFA,5,Roberto Martínez,"Semi-finals (1966,2006)",No
-Congo DR,K,CAF,51,Sébastien Desabre,Group stage (1974),No
+Democratic Republic of the Congo,K,CAF,51,Sébastien Desabre,Group stage (1974),No
 Uzbekistan,K,AFC,62,Srecko Katanec,First appearance,Yes
 Colombia,K,CONMEBOL,13,Néstor Lorenzo,Quarter-finals (2014),No
 England,L,UEFA,4,Thomas Tuchel,Winners (1966),No

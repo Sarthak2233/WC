@@ -1,32 +1,66 @@
-# World Cup Oracle
+# World Cup Oracle 2026: Master System Documentation
 
-## Overview
-The World Cup Oracle is a high-integrity predictive engine designed to forecast outcomes for the FIFA World Cup 2026. It employs a psychopolitical modeling approach, integrating traditional sports metrics (Elo ratings) with tournament context (host nation advantage, championship legacy) to transcend simple talent-based forecasting.
+This document provides a comprehensive overview of the World Cup Oracle, a high-performance psychopolitical prediction system. It explains the architectural "why" behind every file and provides instructions for full system orchestration.
 
-## Key Features
-- **Forensic Audit Integrity:** The pipeline has been audited for temporal leakage, ensuring the model never uses future information to train on historical data.
-- **Causal Feature Engineering:** Includes context-aware features such as `is_host`, `is_defending_champion`, and `legacy_weight`.
-- **Walk-Forward Validation:** Employs a strict "Time Machine" evaluation framework, training models on historical data and predicting out-of-sample past tournaments (2018, 2022) to validate predictive power.
-- **Robust Inference:** Supports specific match predictions via `predict_2026.py` with automated team-name standardization and categorical outcome interpretation based on score difference thresholds.
+## 1. System Mission & Strategy
+The mission is to predict 2026 World Cup outcomes using a "Psychopolitical Oracle" approach. This means we don't just look at FIFA rankings; we model the **causal drivers** of national team performance:
+- **Football Fundamentals:** Historical results and Elo ratings.
+- **Political/Economic Stability:** Correlating national stability with athletic focus.
+- **Cultural Identity:** Hofstede dimensions modeling team cohesion.
+- **Psychological Stress:** Real-time conflict data and historical trauma.
+- **Performance Excellence:** Player-level performance metrics aggregated to the squad.
 
-## Project Structure
-- `data/`: Contains raw input files (`raw/`) and processed/converged datasets (`processed/`, `master/`).
-- `models/`: Stores trained ensemble models, feature manifests, and evaluation results.
-- `src/data/`: ETL scripts for processing raw data and synthesizing features (e.g., `elo_generator.py`).
-- `src/features/`: Core logic for feature convergence and temporal alignment (`feature_converger.py`).
-- `src/models/`: Training pipelines, simulation tools, and evaluation scripts (`time_machine.py`, `ablation_study.py`).
-- `src/utils/`: Utility functions for entity resolution and auditing (`entity_mapper.py`, `feature_auditor.py`).
+## 2. Codebase Justification (The Bigger Picture)
 
-## Quick Start
-To generate a prediction for a specific match:
-```bash
-python3 -m src.models.predict_2026 "Team A" "Team B"
-```
+### Data Ingestion Layer (`src/data/`)
+- **`base_loader.py`**: Ensures all loaders follow a strict Extract-Transform-Load (ETL) contract.
+- **`*_loader.py`**: Specialised scripts for each domain (Political, Culture, etc.). Justification: Isolate API/CSV complexities per domain to prevent "data pollution".
+- **`entity_resolver.py`**: Crucial for cross-dataset mapping. It ensures "Cote d'Ivoire" in Dataset A matches "Ivory Coast" in Dataset B.
 
-To run the full diagnostic suite and audit model validity:
-```bash
-python3 -m src.models.time_machine
-```
+### Feature Engineering Layer (`src/features/`)
+- **`feature_converger.py`**: The **Orchestrator of Truth**. It merges disparate datasets onto a temporal spine. Justification: Prevents data leakage and ensures the model sees the "world state" exactly as it was on a specific match date.
+- **`squad_processor.py`**: Transforms player-level data (e.g., FIFA ratings) into squad-level features.
 
-## Audit Compliance
-This project strictly adheres to a "Falsification-First" mindset. The pipeline is validated against an Elo-only baseline, ensuring that all added psychopolitical signals contribute statistically significant predictive power rather than noise.
+### Modeling & Simulation Layer (`src/models/`)
+- **`trainer.py` & `oracle_training_pipeline.py`**: Implements the **Consensus Oracle**. Instead of one model, we train a Bayesian, a Poisson, and an Ensemble model to find a "wisdom of the crowds" probability.
+- **`simulator.py`**: The physics engine of the project. It converts team features into goal distributions.
+- **`full_tournament_sim.py`**: Encodes the complex FIFA 2026 48-team bracket. Justification: Match-level predictions are insufficient for "who wins the cup"; we need Monte Carlo paths.
+
+### Contest Arena Layer (`src/arena/`)
+- **`hard_lock_engine.py`**: Enforces temporal integrity. Justification: A contest platform is useless if users can "predict" after a match starts.
+- **`scoring.py`**: Pure logic for point allocation (Exact score vs Result).
+
+### Infrastructure & Orchestration
+- **`bootstrap.py`**: The "Red Button". Justification: A complex pipeline needs a single entry point to ensure steps are run in order (Data → Features → Model → Sim).
+- **`database.py`**: Append-only ledger for all predictions, ensuring a permanent, unalterable record of system performance.
+
+## 3. How to Run the System from Scratch
+
+The refactored `bootstrap.py` is your primary tool.
+
+### Complete Rebuild
+To run everything—from downloading/loading raw data to generating the final 10,000-run simulation:
+
+How to use the system:
+   * Total Rebuild: `python3 bootstrap.py --all`
+   * Update Data only: `python3 bootstrap.py --data`
+   * Train Models only: `python3 bootstrap.py --train`
+   * Run Simulations only: `python3 bootstrap.py --sim`
+
+
+### Component-Wise Execution
+If you only want to update specific parts of the pipeline:
+- **Update Data & Features:** `python3 bootstrap.py --data`
+- **Re-train & Benchmark Models:** `python3 bootstrap.py --train`
+- **Run Simulations & Reports:** `python3 bootstrap.py --sim`
+
+## 4. Understanding Output
+- **`logs/pipeline.log`**: The comprehensive audit trail for every execution.
+- **`data/master/oracle_master_features.csv`**: The converged 17-dimensional feature matrix.
+- **`models/mc_win_probabilities.csv`**: The definitive win-probability table for 2026.
+- **`models/benchmark_report.csv`**: Integrity proof showing Oracle superiority over baselines.
+-- **`/models/prediction_summary.csv`**: Final Group Stage Predictions
+-- **`/models/comparative_prediction_report.csv`**: Comparative Prediction Report
+-- **`/models/mc_win_probabilities.csv`**: Full Tournament Simulation Results
+---
+*Created on June 13, 2026. Optimized for high-integrity prediction environments of this 2026 World Cup.*

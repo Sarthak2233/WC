@@ -17,7 +17,7 @@ def run_2026_prediction(team1=None, team2=None):
     logger.info("Initializing CSV-based 2026 Prediction Engine...")
     
     # 1. Load the Oracle
-    model_path = "models/oracle_v1.pkl"
+    model_path = "models/v3/Consensus/consensus_model.pkl"
     if not os.path.exists(model_path):
         logger.error(f"Oracle model not found at {model_path}.")
         return
@@ -30,7 +30,7 @@ def run_2026_prediction(team1=None, team2=None):
     matrix_2026 = oracle_engine.build_2026_matrix()
     
     # Load training feature names for alignment
-    with open("models/feature_names.json", "r") as f:
+    with open("models/v3/feature_names.json", "r") as f:
         trained_features = json.load(f)
     
     if team1 and team2:
@@ -43,23 +43,23 @@ def run_2026_prediction(team1=None, team2=None):
                 logger.error(f"Team {team_name} (canonical: {team_name}) not found.")
                 return None
             features = team_df.iloc[0].drop(['canonical_team', 'year', 'country_code_x', 'country_code_y'], errors='ignore')
+            
             feature_dict = {}
             for feat in trained_features:
-                feature_dict[feat.replace("diff_", "")] = features.get(feat.replace("diff_", ""), 0.0)
-            return pd.Series(feature_dict)
+                val = features.get(feat, 0.0)
+                feature_dict[feat] = pd.to_numeric(val, errors='coerce')
+            return pd.Series(feature_dict).fillna(0)
 
         f1 = get_team_data(t1_canon)
         f2 = get_team_data(t2_canon)
         
         if f1 is not None and f2 is not None:
-            diff = (f1 - f2).add_prefix("diff_")
-            X = diff.to_frame().T
-            for col in trained_features:
-                if col not in X.columns:
-                    X[col] = 0.0
-            X = X[trained_features]
+            # Prepare Inputs for Consensus
+            X1 = f1.to_frame().T
+            X2 = f2.to_frame().T
             
-            score_diff = oracle.predict(X)[0]
+            # Predict Difference using Consensus Meta-Stacking
+            score_diff = oracle.predict_match(X1, X2)[0]
             
             # Apply threshold for categorical interpretation
             threshold = 0.20

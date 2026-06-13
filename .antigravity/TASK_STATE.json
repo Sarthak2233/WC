@@ -1,7 +1,7 @@
 {
   "project": "World Cup 2026 Prediction System (Oracle & Arena)",
-  "version": "1.3.1",
-  "last_updated": "2026-06-10",
+  "version": "1.3.2",
+  "last_updated": "2026-06-12",
   "status": "IN_PROGRESS",
   "milestones": [
     {
@@ -71,7 +71,7 @@
         {
           "id": "5.2",
           "task": "Implement Bayesian Hierarchical Recalibration",
-          "status": "NOT_STARTED"
+          "status": "COMPLETED"
         },
         {
           "id": "5.3",
@@ -81,19 +81,19 @@
         {
           "id": "5.4",
           "task": "Benchmarking Engine (Oracle vs. Baselines)",
-          "status": "NOT_STARTED"
+          "status": "COMPLETED"
         }
       ]
     },
     {
       "id": 6,
       "title": "The Contest Arena & Simulation",
-      "status": "NOT_STARTED",
+      "status": "IN_PROGRESS",
       "sub_phases": [
         {
           "id": "6.1",
           "task": "Implement 'Hard Lock' & Atomic Scoring Engine",
-          "status": "NOT_STARTED"
+          "status": "COMPLETED"
         },
         {
           "id": "6.2",
@@ -103,7 +103,7 @@
         {
           "id": "6.3",
           "task": "Run 10,000 Monte Carlo simulations for Oracle & Baselines",
-          "status": "NOT_STARTED"
+          "status": "COMPLETED"
         }
       ]
     },
@@ -119,7 +119,7 @@
         },
         {
           "id": "6.5.2",
-          "task": "Implement Model Recalibration Loop (Post-Stage Autonomy)",
+          "task": "Implement Model Recalibration Loop (Post-Stage Autonomy) INGEST THE ACTUAL OUTCOME AS THE GAME PROGRESS IN REAL WORLD",
           "status": "NOT_STARTED"
         },
         {

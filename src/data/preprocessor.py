@@ -46,7 +46,23 @@ class Preprocessor:
             if 'player_name' in df.columns:
                 df['player_name'] = df['player_name'].apply(lambda x: standardize_player_name(str(x)) if pd.notnull(x) else x)
 
-            # 4. Fill missing values
+            # 4. Extract year from tournament_id if missing
+            if 'tournament_id' in df.columns and 'tournament_year' not in df.columns and 'year' not in df.columns:
+                try:
+                    df['tournament_year'] = df['tournament_id'].apply(lambda x: int(str(x).split("-")[1]))
+                except:
+                    pass
+
+            # 5. Canonical column renames for compatibility
+            rename_map = {
+                'home_team_name': 'home_team',
+                'away_team_name': 'away_team',
+                'home_team_score': 'home_team_score', # already correct but being safe
+                'away_team_score': 'away_team_score'
+            }
+            df = df.rename(columns=rename_map)
+
+            # 6. Fill missing values
             # Numeric: Mean of current column
             numeric_cols = df.select_dtypes(include=['number']).columns
             df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].mean())

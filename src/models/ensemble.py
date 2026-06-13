@@ -7,27 +7,52 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class StackingEnsemble:
+from sklearn.base import BaseEstimator, RegressorMixin
+
+class StackingEnsemble(BaseEstimator, RegressorMixin):
     """
     Super-model that stacks predictions from multiple base models (XGBoost, LightGBM)
     using a meta-learner (Ridge Regression).
     """
     
-    def __init__(self):
+    def __init__(self, n_estimators=100, max_depth=3, learning_rate=0.1):
+        self.n_estimators = n_estimators
+        self.max_depth = max_depth
+        self.learning_rate = learning_rate
         self.xgb_model = xgb.XGBRegressor(
-            n_estimators=100, max_depth=3, learning_rate=0.1, random_state=42
+            n_estimators=n_estimators, max_depth=max_depth, learning_rate=learning_rate, random_state=42
         )
         self.lgb_model = lgb.LGBMRegressor(
-            n_estimators=100, max_depth=3, learning_rate=0.1, random_state=42
+            n_estimators=n_estimators, max_depth=max_depth, learning_rate=learning_rate, random_state=42
         )
         self.meta_model = Ridge(alpha=1.0)
         self._is_trained = False
         
-    def train(self, X: pd.DataFrame, y: pd.Series) -> None:
+    def get_params(self, deep=True):
+        return {
+            "n_estimators": self.n_estimators,
+            "max_depth": self.max_depth,
+            "learning_rate": self.learning_rate
+        }
+        
+    def set_params(self, **parameters):
+        for parameter, value in parameters.items():
+            setattr(self, parameter, value)
+        # Re-initialize models with new params
+        self.xgb_model = xgb.XGBRegressor(
+            n_estimators=self.n_estimators, max_depth=self.max_depth, learning_rate=self.learning_rate, random_state=42
+        )
+        self.lgb_model = lgb.LGBMRegressor(
+            n_estimators=self.n_estimators, max_depth=self.max_depth, learning_rate=self.learning_rate, random_state=42
+        )
+        return self
+        
+    def fit(self, X: pd.DataFrame, y: pd.Series) -> None:
+        # Backwards-compatible alias for other trainer interfaces
+        self.train = self.fit
+
         """
         Trains the base models and the meta-model on the same data.
-        In a robust implementation, this would use K-Fold cross validation 
-        for the meta-model training to avoid overfitting.
         """
         logger.info("Training base models for ensemble...")
         self.xgb_model.fit(X, y)

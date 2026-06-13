@@ -1,86 +1,69 @@
 import logging
+from src.data.entity_resolver import resolve_country_name, get_iso3_code
+import pycountry
 
 logger = logging.getLogger(__name__)
 
 # Dictionary to map various name formats to a canonical country name
+# This is now a fallback and extension for entity_resolver
 COUNTRY_NAME_MAP = {
     "USA": "United States",
+    "United States": "United States",
     "United States of America": "United States",
-    "South Korea": "Korea Republic",
-    "Republic of Korea": "Korea Republic",
-    "Czechia": "Czech Republic",
+    "South Korea": "South Korea",
+    "Korea Republic": "South Korea",
+    "Republic of Korea": "South Korea",
+    "North Korea": "North Korea",
+    "Korea DPR": "North Korea",
+    "Czechia": "Czechia",
+    "Czech Republic": "Czech Rep",
     "South Africa": "South Africa",
     "Ivory Coast": "Côte d'Ivoire",
     "Cote d'Ivoire": "Côte d'Ivoire",
     "Turkiye": "Türkiye",
     "Turkey": "Türkiye",
+    "Türkiye": "Türkiye",
     "DR Congo": "Congo DR",
     "Democratic Republic of the Congo": "Congo DR",
+    "Congo, The Democratic Republic of the": "Congo DR",
+    "Congo": "Congo DR",
+    "Congo DR": "Congo DR",
     "Cabo Verde": "Cabo Verde",
     "Cape Verde": "Cabo Verde",
     "Curacao": "Curaçao",
     "Curaçao": "Curaçao",
     "Bosnia and Herzegovina": "Bosnia and Herzegovina",
     "Bosina and Herzegovina": "Bosnia and Herzegovina",
-    "Netherlands": "Netherlands",
-    "Holland": "Netherlands",
-    "England": "England",
-    "Scotland": "Scotland",
-    "Wales": "Wales",
-    "Northern Ireland": "Northern Ireland",
-    "Spain": "Spain",
-    "Argentina": "Argentina",
-    "Brazil": "Brazil",
-    "Germany": "Germany",
-    "France": "France",
-    "Italy": "Italy",
-    "Portugal": "Portugal",
-    "Mexico": "Mexico",
-    "Morocco": "Morocco",
-    "Senegal": "Senegal",
-    "Switzerland": "Switzerland",
-    "Ecuador": "Ecuador",
-    "Canada": "Canada",
-    "Australia": "Australia",
-    "Japan": "Japan",
-    "Qatar": "Qatar",
     "Saudi Arabia": "Saudi Arabia",
-    "Iran": "Iran",
-    "Egypt": "Egypt",
-    "Ghana": "Ghana",
-    "Uruguay": "Uruguay",
-    "Colombia": "Colombia",
-    "Croatia": "Croatia",
-    "Belgium": "Belgium",
-    "Denmark": "Denmark",
-    "Norway": "Norway",
-    "Sweden": "Sweden",
-    "Austria": "Austria",
-    "Poland": "Poland",
-    "Ukraine": "Ukraine",
-    "Russia": "Russia",
-    "Serbia": "Serbia",
-    "Algeria": "Algeria",
-    "Tunisia": "Tunisia",
-    "Panama": "Panama",
-    "Iraq": "Iraq",
     "Jordan": "Jordan",
     "Uzbekistan": "Uzbekistan",
 }
 
 def standardize_country_name(name: str) -> str:
-    """Returns the canonical version of a country name."""
-    if not name or not isinstance(name, str):
+    """Returns the canonical version of a country name using pycountry and custom maps."""
+    if not name or not isinstance(name, str) or name.lower() == "nan" or name == "Unknown":
         return "Unknown"
     
     name = name.strip()
-    # Check map first
+    
+    # 1. Check if it's an ISO-3 alpha-3 code
+    if len(name) == 3 and name.isupper():
+        country = pycountry.countries.get(alpha_3=name)
+        if country:
+            return resolve_country_name(country.name)
+            
+    # 2. Use the robust resolver
+    resolved = resolve_country_name(name)
+    if resolved and resolved != name:
+        # Map resolver result through manual overrides to ensure a single canonical form (e.g., 'Democratic Republic of the Congo' -> 'Congo DR')
+        return COUNTRY_NAME_MAP.get(resolved, resolved)
+        
+    # 3. Fallback to manual map
     if name in COUNTRY_NAME_MAP:
         return COUNTRY_NAME_MAP[name]
     
-    # Try normalized check (lowercase/no accents - simplified here)
+    # 4. Normalized check
     normalized_name = name.encode('ascii', 'ignore').decode('ascii').lower()
-    
     for key, val in COUNTRY_NAME_MAP.items():
         if key.lower() == normalized_name or val.lower() == normalized_name:
             return val

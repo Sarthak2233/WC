@@ -1,14 +1,15 @@
 import pytest
 import pandas as pd
+import os
 from src.data.fifa_loader import FifaLoader
-from src.fifa_database import PlayerRaw, FifaSessionLocal, init_fifa_db
-
-@pytest.fixture(autouse=True)
-def setup_db():
-    init_fifa_db()
 
 def test_fifa_loader_upsert():
-    loader = FifaLoader(FifaSessionLocal)
+    loader = FifaLoader()
+    
+    # Ensure starting clean
+    output_path = os.path.join("data", "processed", "players_fifa.csv")
+    if os.path.exists(output_path):
+        os.remove(output_path)
     
     # Mock data: 1 new player, 1 existing player to update
     data = pd.DataFrame([
@@ -17,23 +18,22 @@ def test_fifa_loader_upsert():
     ])
     
     # Run load (populate first)
-    loader.load(data)
+    loader.save_processed(data)
     
     # Verify population
-    session = FifaSessionLocal()
-    player = session.query(PlayerRaw).filter_by(full_name="Test Player").first()
-    assert player is not None
-    assert player.overall == 80
-    session.close()
+    df = pd.read_csv(output_path)
+    player = df[df["full_name"] == "Test Player"]
+    assert not player.empty
+    assert player.iloc[0]["overall"] == 80
     
     # Run load (update)
     update_data = pd.DataFrame([
         {"full_name": "Lionel Messi", "nationality": "Argentina", "overall": 99}
     ])
-    loader.load(update_data)
+    loader.save_processed(update_data)
     
     # Verify update
-    session = FifaSessionLocal()
-    messi = session.query(PlayerRaw).filter_by(full_name="Lionel Messi").first()
-    assert messi.overall == 99
-    session.close()
+    df = pd.read_csv(output_path)
+    messi = df[df["full_name"] == "Lionel Messi"]
+    assert not messi.empty
+    assert messi.iloc[0]["overall"] == 99

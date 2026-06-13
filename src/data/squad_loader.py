@@ -1,28 +1,9 @@
 import pandas as pd
 import requests
 import logging
-from io import StringIO
-from typing import Dict, Any, List
-from sqlalchemy.orm import Session
-
-from src.data.base_loader import BaseLoader
-from src.database import Player, WorldCup
-
-logger = logging.getLogger(__name__)
-
-class SquadLoader(BaseLoader):
-    """
-    Loads detailed squad and player metadata (Layer 3).
-    Sources: FIFA 23 Kaggle mirror and Wikipedia.
-    """
-    
-import pandas as pd
-import requests
-import logging
 import os
 from io import StringIO
 from typing import Dict, Any, List
-from sqlalchemy.orm import Session
 
 from src.data.base_loader import BaseLoader
 
@@ -38,10 +19,11 @@ class SquadLoader(BaseLoader):
     # Mirror for FIFA 23 player data
     FIFA23_URL = "https://raw.githubusercontent.com/miraehab/FIFA-23-ML-Project/main/players_fifa23.csv"
     
-    def __init__(self, session_factory):
-        self.session_factory = session_factory
+    def __init__(self, session_factory=None):
         self.raw_dir = os.path.join("data", "raw")
+        self.processed_dir = os.path.join("data", "processed")
         os.makedirs(self.raw_dir, exist_ok=True)
+        os.makedirs(self.processed_dir, exist_ok=True)
         
     def _fetch_csv(self, filename: str) -> pd.DataFrame:
         local_path = os.path.join(self.raw_dir, filename)
@@ -104,42 +86,14 @@ class SquadLoader(BaseLoader):
             logger.error(f"Missing columns: {missing}. Columns available: {df.columns.tolist()}")
             return pd.DataFrame()
             
-        # Return all mapped columns
         return df
         
-    def load(self, df: pd.DataFrame) -> None:
+    def save_processed(self, df: pd.DataFrame) -> None:
         """
-        Updates the Player table with all FIFA attributes.
+        Saves transformed data to CSV in data/processed/.
         """
         if df.empty:
             return
-            
-        from src.data.entity_resolver import resolve_country_name
-        session: Session = self.session_factory()
-        try:
-            # We match by name and country
-            for _, row in df.iterrows():
-                country_std = resolve_country_name(row["country"])
-                
-                # Find players in our DB
-                players = session.query(Player).filter_by(
-                    name=row["name"],
-                    country=country_std
-                ).all()
-                
-                for p in players:
-                    # Update all fields if they are missing (or always update to latest)
-                    for col in ["club", "overall", "potential", "age", "value_eur", "wage_eur", 
-                                "pace_total", "shooting_total", "passing_total", "dribbling_total", 
-                                "defending_total", "physicality_total"]:
-                        if col in row and pd.notna(row[col]):
-                            setattr(p, col, row[col])
-                    
-            session.commit()
-            logger.info("Successfully updated Layer 3: Squad Info with comprehensive FIFA attributes.")
-        except Exception as e:
-            session.rollback()
-            logger.error(f"Error loading squad data: {e}")
-            raise
-        finally:
-            session.close()
+        path = os.path.join(self.processed_dir, "players_fifa23.csv")
+        df.to_csv(path, index=False)
+        logger.info(f"Saved squad info to {path}")

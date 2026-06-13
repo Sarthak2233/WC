@@ -62,7 +62,7 @@ def run_2026_prediction(team1=None, team2=None):
             score_diff = oracle.predict_match(X1, X2)[0]
             
             # Apply threshold for categorical interpretation
-            threshold = 0.20
+            threshold = 0.1
             if score_diff > threshold:
                 result = f"{team1} ({t1_canon}) wins"
             elif score_diff < -threshold:
